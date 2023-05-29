@@ -24,6 +24,7 @@ router.post('/api/users/signin', [
 
   const passwordMatch = await Password.compare(user.password, password)
 
+
   if (!passwordMatch) throw new BadRequestError("Invalid credentials");
 
   const userjwt = jwt.sign({
