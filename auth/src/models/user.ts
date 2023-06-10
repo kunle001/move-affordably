@@ -20,6 +20,7 @@ interface userDocs extends mongoose.Document {
   passwordChangedAt?: Date;
   createdAt: Date;
   passwordResetToken: string,
+  role: string,
   passwordResetExpires: Date,
   correctPassword: (inputPassword: string, savedPassword: string) => Promise<boolean>;
   changedPasswordAfter: (JWTtimestamp: number) => boolean;
@@ -47,10 +48,16 @@ const userSchema = new mongoose.Schema({
   passwordChangedAt: mongoose.Schema.Types.Date,
   passwordResetToken: String,
   passwordResetExpires: mongoose.Schema.Types.Date,
+  role: {
+    type: String,
+    enum: ['admin', 'user'],
+    default: 'user'
+  },
   createdAt: {
     type: mongoose.Schema.Types.Date,
     default: Date.now
   },
+
 
 }, {
   toJSON: {
