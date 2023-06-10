@@ -19,6 +19,7 @@ app.use(cookieSession({
   signed: false,
   // secure: true,
 }));
+app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser());
 
 

@@ -1,86 +1,107 @@
-import mongoose from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 import { room, apartmentType } from "./roomSpec";
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
-interface apartmentAttrs {
-  location: string;
-  checkpoints: [string];
-  annualPackage: number;
-  totalPackage: number;
-  distanceFromCheckPoints: [number],
-  images?: [string],
-  landlordSpecs: string,
-  roomCategory?: room,
-  apartmentType: apartmentType
-};
-
-interface apartmentDocs extends mongoose.Document {
-  location: string;
-  checkpoints: [string];
-  annualPackage: number;
-  totalPackage: number;
-  distanceFromCheckPoints: [number],
-  images: [string],
-  landlordSpecs: string,
-  apartmentType: apartmentType,
-  createdAt: Date
-};
-
-interface apartmentModel extends mongoose.Model<apartmentDocs> {
-  build(attrs: apartmentAttrs): apartmentDocs
-};
-
-const apartmentsSchema = new mongoose.Schema({
+interface ApartmentAttrs {
   location: {
-    type: String,
-    required: [true, 'location of apartment is required']
+    type: string;
+    coordinates: [number];
+    address?: string;
+    description?: string;
+  };
+  checkpoints: [string];
+  annualPackage: number;
+  totalPackage: number;
+  distanceFromCheckPoints: [number];
+  images?: [string];
+  landlordSpecs: string;
+  roomCategory?: room;
+  apartmentType: apartmentType;
+}
+
+interface ApartmentDoc extends Document {
+  location: {
+    type: string;
+    coordinates: [number];
+    address?: string;
+    description?: string;
+  };
+  checkpoints: [string];
+  annualPackage: number;
+  totalPackage: number;
+  distanceFromCheckPoints: [number];
+  images: [string];
+  landlordSpecs: string;
+  roomCategory?: room;
+  apartmentType: apartmentType;
+  createdAt: Date;
+}
+
+interface ApartmentModel extends Model<ApartmentDoc> {
+  build(attrs: ApartmentAttrs): ApartmentDoc;
+}
+
+const apartmentsSchema = new Schema({
+  location: {
+    type: {
+      type: String,
+      default: "Point",
+      enum: ["Point"],
+    },
+    coordinates: [Number],
+    address: String,
+    description: String,
   },
   checkpoints: {
     type: [String],
-    required: [true, 'checkpoints is required']
+    required: [true, "checkpoints is required"],
   },
   annualPackage: {
-    type: String,
-    required: [true, 'yearly pay is required']
+    type: Number,
+    required: [true, "yearly pay is required"],
   },
   totalPackage: {
     type: Number,
-    required: [true, 'what is the total package']
+    required: [true, "what is the total package"],
   },
   distanceFromCheckPoints: {
-    type: [Number]
+    type: [Number],
   },
   images: [String],
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   landlordSpecs: String,
   roomCategory: {
     type: String,
-    enum: [room]
+    enum: Object.values(room),
   },
   apartmentType: {
     type: String,
-    enum: [apartmentType],
-    required: [true, 'apartment type is required']
+    enum: Object.values(apartmentType)
   }
 }, {
   toJSON: {
     transform(doc, ret) {
       ret.id = ret._id;
-      delete ret._id
-    }
-  }
+      delete ret._id;
+      delete ret.__v;
+    },
+  },
 });
 
-apartmentsSchema.set('versionKey', 'version')
+apartmentsSchema.index({ location: "2dsphere" });
+apartmentsSchema.set("versionKey", "version");
 apartmentsSchema.plugin(updateIfCurrentPlugin);
 
-apartmentsSchema.statics.build = (attrs: apartmentAttrs) => {
+apartmentsSchema.statics.build = (attrs: ApartmentAttrs) => {
   return new Apartment(attrs);
 };
 
-const Apartment = mongoose.model<apartmentDocs, apartmentModel>('Apartment', apartmentsSchema);
+const Apartment = mongoose.model<ApartmentDoc, ApartmentModel>(
+  "Apartment",
+  apartmentsSchema
+);
 
-export { Apartment }
+export { Apartment };
