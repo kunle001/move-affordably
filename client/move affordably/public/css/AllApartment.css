@@ -1,0 +1,70 @@
+.all-apartments {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin-top: 100px;
+  background-color: rgb(255, 255, 255);
+  padding: 10px;
+}
+
+.apartment-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 10px;
+  padding: 20px;
+}
+
+.apartment-header{
+  font-weight: 600;
+  font-size: large;
+
+}
+
+/* Add this to your AllApartment.css file or create a new CSS file for the component */
+
+.filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"] {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #007bff;
+}
+.dropdown-button {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+  background-color: #f1f1f1;
+  padding: 10px;
+  margin-top: 100px;
+  border-radius: 50%;
+  color: aquamarine;
+  height: 35px;
+}
+
+.dropdown-arrow {
+  font-size: 16px;
+}
+

@@ -1,0 +1,42 @@
+.comment-container {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: flex-start;
+  margin-right: 1rem;
+}
+
+.user-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 0.5rem;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-header {
+  display: flex;
+  align-items: center;
+}
+
+.user-name {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.comment-date {
+  color: #888;
+}
+
+.comment-content {
+  margin: 0;
+}

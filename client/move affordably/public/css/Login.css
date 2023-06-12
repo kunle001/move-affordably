@@ -1,0 +1,59 @@
+.container {
+  width: 150vh;
+  height: 100vh;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url("https://th.bing.com/th/id/R.1b76ad8c56643ada1625bc0d37a2e1d3?rik=5urr3ZmsvPH0iw&pid=ImgRaw&r=0") center center;
+  backdrop-blur: 10px;
+  background-size: cover;
+
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  flex: 1;
+  min-width: 40%;
+  margin: 10px 0px;
+  padding: 10px;
+  border: 10px;
+}
+
+.button {
+  
+  width: auto;
+  height: auto;
+  border: none;
+  background-color: rgb(197, 209, 209);
+  color: rgb(66, 54, 54);
+  cursor: pointer;
+  margin-bottom: 10px;
+  border-radius: 20%;
+}
+
+.loginform {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  padding: 20px;
+  width: 25%;
+  background-color: transparent;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: rgb(15, 45, 36);
+}
+
+.link {
+  margin: 5px 0px;
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}

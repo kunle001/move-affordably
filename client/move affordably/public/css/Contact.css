@@ -1,0 +1,51 @@
+.contact {
+  display: flex;
+  margin-left: 50px;
+  margin-bottom: 20px;
+  height: 400px;
+  width: 100%;
+}
+
+.image-container {
+  flex:1;
+  width: 600px;
+  height: 400px;
+  padding-right:10rem;
+}
+
+.customer-image {
+  flex: 2;
+  width: 100%;
+  height: 100%;
+  padding-left: 50px;
+}
+
+.contact form {
+  margin-left: 20px;
+}
+
+.contact input,
+.contact textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.contact textarea {
+  height: 100px;
+  border-radius: 10px;
+}
+
+.contact button {
+  width: 100%;
+}
+
+.contact-heading {
+  padding-left: 100px;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
