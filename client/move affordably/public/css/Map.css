@@ -1,0 +1,13 @@
+#map {
+  width: 100%;
+  height: 500px;
+}
+
+.marker {
+  background-image: url(../../public/icons/location.png);
+  background-size: cover;
+  color: rgb(255, 255, 255);
+  width: 32px;
+  height: 32px;
+   /* Adjust the positioning of the marker */
+}
