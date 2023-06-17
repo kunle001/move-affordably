@@ -1,24 +1,28 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState } from 'react';
 import '../../public/css/Login.css';
-import Button from '../components/Button';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
-const Login: React.FC = () => {
+const LoginPage: React.FC = () => {
+  const [activeForm, setActiveForm] = useState<'login' | 'signup'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
+  const handleFormSwitch = () => {
+    setActiveForm(prevForm => (prevForm === 'login' ? 'signup' : 'login'));
   };
 
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Perform login logic here
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // Perform login or signup logic here
     console.log('Email:', email);
     console.log('Password:', password);
     // Reset form fields
@@ -26,22 +30,17 @@ const Login: React.FC = () => {
     setPassword('');
   };
 
-  const handleGoogleAuth = () => {
-    // Implement Google authentication logic here
-    console.log('Google authentication');
-  };
-
   return (
-    <>
+    <div className="login-page">
       <Navbar />
-      <div className="container">
-        <div className="wrapper">
-          <h1 className="title">LOGIN</h1>
+      <div className="login-container">
+        <div className="form-container">
+          <h2 className="form-title">{activeForm === 'login' ? 'Login' : 'Sign Up'}</h2>
           <form className="form" onSubmit={handleSubmit}>
             <input
               type="email"
               className="input"
-              placeholder="email"
+              placeholder="Email"
               value={email}
               onChange={handleEmailChange}
               required
@@ -49,27 +48,22 @@ const Login: React.FC = () => {
             <input
               type="password"
               className="input"
-              placeholder="password"
+              placeholder="Password"
               value={password}
               onChange={handlePasswordChange}
               required
             />
-            <button className='button'>
-              Login
-            </button>
-            <button className='button'>
-              Forgot Password
-            </button>
-            <button className='button'>
-              Signup
+            <button type="submit" className="submit-button">
+              {activeForm === 'login' ? 'Login' : 'Sign Up'}
             </button>
           </form>
+          <p className="form-switch" onClick={handleFormSwitch}>
+            {activeForm === 'login' ? "Don't have an account? Sign up" : 'Already have an account? Login'}
+          </p>
         </div>
       </div>
-      <Footer />
-    </>
-
+    </div>
   );
 };
 
-export default Login;
+export default LoginPage;

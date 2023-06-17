@@ -11,6 +11,15 @@ interface Filters {
   transportCost: string;
 }
 
+const images = [
+  '../../public/images/house1.png',
+  '../../public/images/house2.png',
+  '../../public/images/house 3.png',
+  '../../public/images/house4.png',
+  '../../public/images/house5.png',
+  '../../public/images/house6.png',
+];
+
 const AllApartments: React.FC = () => {
   const totalApartments = 50;
   const apartmentsPerPage = 6;
@@ -53,6 +62,7 @@ const AllApartments: React.FC = () => {
 
     <>
       <Navbar />
+      <h3 className='all-apartment-header'>All Apartments</h3>
       <div className="all-apartments">
         <div className="dropdown-button" onClick={toggleFilterVisibility}>
           <span className="dropdown-arrow">&#9650;</span>
@@ -60,7 +70,7 @@ const AllApartments: React.FC = () => {
         {filterVisible && <Filter />}
         <div className="apartment-list">
           {displayedApartments.map((_, index) => (
-            <ApartmentCard key={index} />
+            <ApartmentCard images={images} key={index} />
           ))}
         </div>
         <div className="pagination">

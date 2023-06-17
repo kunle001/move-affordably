@@ -16,6 +16,7 @@ const Home = () => {
     '../../public/images/house 3.png',
     '../../public/images/house4.png',
     '../../public/images/house5.png',
+    '../../public/images/house6.png',
   ];
 
   return (
@@ -29,27 +30,32 @@ const Home = () => {
       </div>
       <ul className="line"></ul>
       <div className="cards">
-        <ApartmentCard />
-        <ApartmentCard />
-        <ApartmentCard />
-        <ApartmentCard />
-        <ApartmentCard />
-        <ApartmentCard />
+        <ApartmentCard images={images} />
+        <ApartmentCard images={images} />
+        <ApartmentCard images={images} />
+        <ApartmentCard images={images} />
+        <ApartmentCard images={images} />
+        <ApartmentCard images={images} />
+        <ApartmentCard images={images} />
+        <ApartmentCard images={images} />
+        <ApartmentCard images={images} />
       </div>
-      <button
-        style={{
-          padding: '10px',
-          borderRadius: '5px',
-          backgroundColor: 'rgb(133, 180, 165)',
-          margin: '5px auto',
-          display: 'block',
-          border: '0.5px',
-          width: '80%',
-          maxWidth: '300px',
-        }}
-      >
-        See All Apartments
-      </button>
+      <a href='/apartments' style={{ color: 'inherit' }}>
+        <button
+          style={{
+            padding: '10px',
+            borderRadius: '5px',
+            backgroundColor: 'rgb(133, 180, 165)',
+            margin: '5px auto',
+            display: 'block',
+            border: '0.5px',
+            width: '80%',
+            maxWidth: '300px',
+          }}
+        >
+          See All Apartments
+        </button>
+      </a>
       <h5 className="contact-heading">Latest Locations</h5>
       <div className='map-container'>
         <Map latitude={6.9} longitude={3.4} />
