@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../../public/css/SlideShow.css';
+import { Link } from 'react-router-dom'
 
 interface Props {
   images: string[]
@@ -18,16 +19,18 @@ const Slideshow = ({ images }: Props) => {
   }, [images.length]);
 
   return (
-    <div className="slidershow-container">
-      <div className="slidershow">
-        <img src={images[currentSlide]} alt="Apartment" className="slideshow-image" />
-        <div className="slideshow-text">
-          <h2 className="slide-title">Allen, Ikeja</h2>
-          <b style={{ color: 'rgb(40, 202, 72)' }}>200,000# Per Year</b>
-          <p className="slide-description">Spacious living room with modern design</p>
+    <Link to="/apartment/123" className="apartment-card-link">
+      <div className="slidershow-container">
+        <div className="slidershow">
+          <img src={images[currentSlide]} alt="Apartment" className="slideshow-image" />
+          <div className="slideshow-text">
+            <h2 className="slide-title">Allen, Ikeja</h2>
+            <b style={{ color: 'rgb(40, 202, 72)' }}>200,000# Per Year</b>
+            <p className="slide-description">Spacious living room with modern design</p>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

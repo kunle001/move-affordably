@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="/">
           <img src="../../public/images/logo.png" alt="Logo" className="logo" style={{ height: '60px', width: '60px', borderRadius: '50%' }} />
           <b style={{ color: 'rgb(41, 112, 90)' }}>MooveNow</b>
         </a>
@@ -18,7 +18,7 @@ const Navbar = () => {
               <a className="nav-link" href="#">About</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Services</a>
+              <a className="nav-link" href="/apartments">Apartments</a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#">Contact</a>
@@ -27,10 +27,7 @@ const Navbar = () => {
               <a className="nav-link" href="#">Blog</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Login</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Sign Up</a>
+              <a className="nav-link" href="/login">Login/Signup</a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#">
