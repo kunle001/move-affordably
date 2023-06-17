@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import AllApartments from './pages/AllApartments';
 import SingleApartment from './pages/Apartment';
 import Map from './components/Map';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 function App() {
   // const [alertVisible, setAlertVisible] = useState(false);
@@ -29,7 +30,16 @@ function App() {
   // );
 
   return <div>
-    <Home />
+    <Router>
+      <div>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='login' element={<Login />} />
+          <Route path='/apartments' element={<AllApartments />} />
+          <Route path='/apartment/:id' element={<SingleApartment />} />
+        </Routes>
+      </div>
+    </Router>
   </div>;
 }
 
