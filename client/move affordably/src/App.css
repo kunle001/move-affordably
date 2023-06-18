@@ -51,3 +51,10 @@
   height: 100%;
   background-color: rgb(255, 255, 255);
 }
+
+.see-all-apartment-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.3s;
+}

@@ -12,8 +12,9 @@
 }
 
 .slider-image {
-  width: 80%;
-  height: 450px;
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
   border-radius: 5px;
 }
 
@@ -86,7 +87,7 @@
 .add-comment-button {
   background-color: #007bff;
   color: #ffffff;
-  padding: 10px ;
+  padding: 10px;
   font-size: 16px;
   border: none;
   cursor: pointer;
@@ -98,15 +99,20 @@
 }
 
 .payment-button {
-  background-color: #256133;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #381111;
   padding: 10px 20px;
   font-size: 18px;
   cursor: pointer;
   border-radius: 50%;
   height: 100px;
   width: 100px;
+  border: 1px solid #29d01e;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
 
+.payment-button:hover {
+  background-color: #82bf7d;
 }
 
 /* Responsive Styling */
@@ -116,10 +122,9 @@
   }
 }
 
-.apartment-price{
+.apartment-price {
   font-size: x-large;
   color: #338a2d;
-  font-style: inherit;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
@@ -127,12 +132,23 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  padding: 10px 0px 10px 0px;
-
+  padding: 10px;
 }
+
 .single-apartment-map {
   margin: 40px 0;
   height: 400px;
 }
 
-
+.description-header {
+  font-size: 28px;
+  font-weight: bold;
+  font-style: unset;
+  margin-bottom: 20px;
+  color: #310909;
+  text-transform: uppercase;
+  border-bottom: 0.5px solid #d3cfcf;
+  padding-bottom: 10px;
+  /* Add your custom styles */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}

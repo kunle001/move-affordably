@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Slider from 'react-slick';
-import { FaHeart } from 'react-icons/fa';
+import { FaHeart, FaMoneyBillWave, FaSwimmingPool, FaParking, FaShieldAlt } from 'react-icons/fa';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '../../public/css/Apartment.css';
@@ -87,7 +87,7 @@ const SingleApartment: React.FC = () => {
         </Slider>
       </div>
       <div className="single-apartment-details">
-        <h2>DESCRIPTION</h2>
+        <h2 className="description-header">DESCRIPTION</h2>
         <p className="description">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
           euismod, tellus sit amet varius finibus, nulla risus accumsan leo, sit
@@ -97,15 +97,25 @@ const SingleApartment: React.FC = () => {
         <div className="apartment-info">
           <div className="apartment-info-item">
             <h3>Apartment Price</h3>
-            <p className="apartment-price">200,000 Naira/Year</p>
+            <p className="apartment-price">
+              <FaMoneyBillWave /> 200,000 Naira/Year
+            </p>
           </div>
           <div className="apartment-info-item">
             <h3>Amenities</h3>
             <ul>
-              <li>Gym</li>
-              <li>Swimming pool</li>
-              <li>Parking</li>
-              <li>24/7 Security</li>
+              <li>
+                <FaSwimmingPool /> Gym
+              </li>
+              <li>
+                <FaSwimmingPool /> Swimming pool
+              </li>
+              <li>
+                <FaParking /> Parking
+              </li>
+              <li>
+                <FaShieldAlt /> 24/7 Security
+              </li>
             </ul>
           </div>
           <div className="apartment-info-item">

@@ -1,59 +1,75 @@
-.container {
-  width: 150vh;
+.login-page {
+  padding-top: 30px;
   height: 100vh;
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url("https://th.bing.com/th/id/R.1b76ad8c56643ada1625bc0d37a2e1d3?rik=5urr3ZmsvPH0iw&pid=ImgRaw&r=0") center center;
-  backdrop-blur: 10px;
-  background-size: cover;
-
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f2;
+  background-image: url('https://th.bing.com/th/id/OIP.xDuMBs8hCpz1K43wlIOe8AHaE8?pid=ImgDet&rs=1');
+  background-size: cover;
+  background-position: center;
+}
+
+.login-container {
+  max-width: 400px;
+  width: 100%;
+  padding: 20px;
+  background-color: transparent;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
-.input {
-  flex: 1;
-  min-width: 40%;
-  margin: 10px 0px;
-  padding: 10px;
-  border: 10px;
-}
-
-.button {
-  
-  width: auto;
-  height: auto;
-  border: none;
-  background-color: rgb(197, 209, 209);
-  color: rgb(66, 54, 54);
-  cursor: pointer;
-  margin-bottom: 10px;
-  border-radius: 20%;
-}
-
-.loginform {
-  display: flex;
-  flex-direction: column;
-}
-
-.wrapper {
-  padding: 20px;
-  width: 25%;
-  background-color: transparent;
-  margin: 0 auto;
-}
-
-.title {
+.form-title {
+  margin-bottom: 20px;
   font-size: 24px;
-  font-weight: 700;
-  color: rgb(15, 45, 36);
+  font-weight: bold;
+  color: #ddcbb8;
 }
 
-.link {
-  margin: 5px 0px;
-  font-size: 12px;
-  text-decoration: underline;
+.form {
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f2f2f2;
+  font-size: 16px;
+  color: #333333;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #4caf50;
+  color: #958320;
+  font-size: 16px;
   cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #8a7b0d;
+}
+
+.form-switch {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333333;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.form-switch:hover {
+  color: #d9d9d9;
 }

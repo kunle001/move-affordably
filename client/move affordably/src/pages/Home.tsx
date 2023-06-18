@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ApartmentCard from '../components/ApartmentCard';
 import Navbar from '../components/Navbar';
 import About from '../components/About';
@@ -8,6 +8,7 @@ import '../../public/css/Contact.css';
 import Button from '../components/Button';
 import Newsletter from '../components/NewsLetter';
 import Map from '../components/Map';
+import { response } from 'express';
 
 const Home = () => {
   const images = [
@@ -18,6 +19,17 @@ const Home = () => {
     '../../public/images/house5.png',
     '../../public/images/house6.png',
   ];
+  const [backendData, setBackendData] = useState([{}]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/apartments").then(
+      response => response.json()
+    ).then(
+      data => {
+        setBackendData(data)
+      }
+    )
+  }, [])
 
   return (
     <div style={{ position: 'relative' }}>
@@ -40,7 +52,7 @@ const Home = () => {
         <ApartmentCard images={images} />
         <ApartmentCard images={images} />
       </div>
-      <a href='/apartments' style={{ color: 'inherit' }}>
+      <a href='/apartments' className='see-all-apartment-link'>
         <button
           style={{
             padding: '10px',
