@@ -11,10 +11,10 @@ const multerStorage = (apartment?: mongoose.Document) => {
 
   const store = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, ' /images')
+      cb(null, ' ../../../../public/images/')
     },
     filename: (req, file, cb) => {
-      cb(null, `apartment-${apartment!.id || 'test'}-${Date.now})}`)
+      cb(null, `apartment-${Date.now})}`)
     }
   });
   return store
@@ -34,7 +34,7 @@ const upload = multer({
 });
 
 const uploadPicture = upload.fields([
-  { name: 'image', maxCount: 10 }
+  { name: 'images', maxCount: 10 }
 ]);
 
 const resizeApartmentImages = async (req: Request, res: Response, next: NextFunction) => {
@@ -45,13 +45,13 @@ const resizeApartmentImages = async (req: Request, res: Response, next: NextFunc
   await Promise.all(
     // @ts-ignore
     req.files.images.map(async (file: Express.Multer.File, i: number) => {
-      const filename = `apartment-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
+      const filename = `apartment-${i + 1}.jpeg`;
 
       await sharp(file.buffer)
         .resize(2000, 1333)
         .toFormat('jpeg')
         .jpeg({ quality: 90 })
-        .toFile(`public/images/${filename}`);
+        .toFile(`../../../../public/images/${filename}`);
 
       req.body.images.push(filename);
     })
