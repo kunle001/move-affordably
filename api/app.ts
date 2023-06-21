@@ -19,11 +19,16 @@ import { signoutRouter } from './src/routes/users/logout';
 import { getOneApartmentRouter } from './src/routes/apartment/getone';
 import { getOneCommentRouter } from './src/routes/comment/getone';
 import { getAllApartmentRouter } from './src/routes/apartment/getall';
+import path from 'path';
+import cors from 'cors'
 
 
 
 const app = express();
 app.set('trust proxy', true)
+
+// serving static files
+app.use(express.static(path.join(__dirname, 'public')));
 
 // middlewares
 app.use(json());
@@ -33,6 +38,7 @@ app.use(cookieSession({
 }));
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser());
+app.use(cors())
 
 
 

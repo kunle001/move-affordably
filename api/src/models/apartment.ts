@@ -17,6 +17,7 @@ interface ApartmentAttrs {
   landlordSpecs: string;
   roomCategory?: room;
   apartmentType: apartmentType;
+  description: string;
 }
 
 interface ApartmentDoc extends Document {
@@ -35,6 +36,7 @@ interface ApartmentDoc extends Document {
   roomCategory?: room;
   apartmentType: apartmentType;
   createdAt: Date;
+  description: string
 }
 
 interface ApartmentModel extends Model<ApartmentDoc> {
@@ -66,6 +68,10 @@ const apartmentsSchema = new Schema({
   },
   distanceFromCheckPoints: {
     type: [Number],
+  },
+  description: {
+    type: String,
+    required: true
   },
   images: [String],
   createdAt: {

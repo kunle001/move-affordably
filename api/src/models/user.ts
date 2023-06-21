@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 import crypto from 'crypto'
 
 interface userAttrs {
-  name: string;
+  name?: string;
   email: string;
   image?: string;
   password: string;
@@ -12,7 +12,7 @@ interface userAttrs {
 };
 
 interface userDocs extends mongoose.Document {
-  name: string;
+  name?: string;
   email: string;
   image: string;
   password: string;
@@ -34,7 +34,6 @@ interface userModel extends mongoose.Model<userDocs> {
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
   },
   email: {
     type: String,

@@ -8,8 +8,9 @@ const router = express.Router();
 
 router.post('/api/apartments/create', currentUser, requireAuth, async (req: Request, res: Response) => {
   // if (req.currentUser!.role !== 'admin') throw new NotAUthorizedError()
-  const apartment = Apartment.build(req.body);
 
+  const apartment = Apartment.build(req.body);
+  console.log(apartment)
   await apartment.save()
 
   res.status(201).send(apartment)
