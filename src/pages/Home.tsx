@@ -8,7 +8,27 @@ import '../../public/css/Contact.css';
 import Button from '../components/Button';
 import Newsletter from '../components/NewsLetter';
 import Map from '../components/Map';
-import { response } from 'express';
+import { apartmentType, room } from '../../api/src/models/roomSpec';
+
+interface DataProps {
+  location: {
+    type: string;
+    coordinates: [number];
+    address: string;
+    description?: string;
+  };
+  checkpoints: [string];
+  annualPackage: number;
+  totalPackage: number;
+  distanceFromCheckPoints: [number];
+  images: [string];
+  landlordSpecs: string;
+  roomCategory?: room;
+  apartmentType: apartmentType;
+  createdAt: Date;
+  description: string;
+  id: string;
+}
 
 const Home = () => {
   const images = [
@@ -19,22 +39,20 @@ const Home = () => {
     '../../public/images/house5.png',
     '../../public/images/house6.png',
   ];
-  const [backendData, setBackendData] = useState([{}]);
+  const [backendData, setBackendData] = useState<DataProps[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/apartments").then(
-      response => response.json()
-    ).then(
-      data => {
-        setBackendData(data)
-      }
-    )
-  }, [])
+    fetch('http://localhost:3000/api/apartments')
+      .then((response) => response.json())
+      .then((data: DataProps[]) => {
+        setBackendData(data);
+      });
+  }, []);
 
   return (
     <div style={{ position: 'relative' }}>
       <div className="display"></div>
-      <Slideshow images={images} />
+      <Slideshow />
       <Navbar />
       <div className="hot-apartments-heading">
         <ul className="line"></ul>
@@ -42,17 +60,43 @@ const Home = () => {
       </div>
       <ul className="line"></ul>
       <div className="cards">
-        <ApartmentCard images={images} />
-        <ApartmentCard images={images} />
-        <ApartmentCard images={images} />
-        <ApartmentCard images={images} />
-        <ApartmentCard images={images} />
-        <ApartmentCard images={images} />
-        <ApartmentCard images={images} />
-        <ApartmentCard images={images} />
-        <ApartmentCard images={images} />
+        {backendData.map(
+          (
+            {
+              location,
+              checkpoints,
+              annualPackage,
+              totalPackage,
+              distanceFromCheckPoints,
+              images,
+              landlordSpecs,
+              roomCategory,
+              apartmentType,
+              createdAt,
+              description,
+              id
+            },
+            index
+          ) => (
+            <ApartmentCard
+              key={index}
+              location={location}
+              checkpoints={checkpoints}
+              annualPackage={annualPackage}
+              totalPackage={totalPackage}
+              distanceFromCheckPoints={distanceFromCheckPoints}
+              images={images}
+              landlordSpecs={landlordSpecs}
+              roomCategory={roomCategory}
+              apartmentType={apartmentType}
+              createdAt={createdAt}
+              description={description}
+              id={id}
+            />
+          )
+        )}
       </div>
-      <a href='/apartments' className='see-all-apartment-link'>
+      <a href="/apartments" className="see-all-apartment-link">
         <button
           style={{
             padding: '10px',
@@ -69,10 +113,10 @@ const Home = () => {
         </button>
       </a>
       <h5 className="contact-heading">Latest Locations</h5>
-      <div className='map-container'>
+      <div className="map-container">
         <Map latitude={6.9} longitude={3.4} />
       </div>
-      <ul className='line'></ul>
+      <ul className="line"></ul>
       <About />
       <ul className="line"></ul>
       <Newsletter />

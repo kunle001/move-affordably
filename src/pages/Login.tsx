@@ -1,40 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
+import axios from 'axios';
 import '../../public/css/Login.css';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { response } from 'express';
 
 const LoginPage: React.FC = () => {
-  const [activeForm, setActiveForm] = useState<'login' | 'signup'>('login');
+  const [activeForm, setActiveForm] = useState<'signin' | 'signup'>('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleFormSwitch = () => {
-    setActiveForm(prevForm => (prevForm === 'login' ? 'signup' : 'login'));
+    setActiveForm(prevForm => (prevForm === 'signin' ? 'signup' : 'signin'));
   };
 
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
 
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
-  const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Perform login or signup logic here
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('Confirm Password:', confirmPassword);
-    // Reset form fields
-    setEmail('');
-    setPassword('');
-    setConfirmPassword('');
+
+    try {
+      const response = await axios.post(`http://localhost:3000/api/users/${activeForm}`, {
+        email,
+        password,
+        confirmPassword
+      });
+
+      console.log('Login or signup successful');
+      console.log('Response:', response.data);
+
+      // Reset form fields
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+
+      // Reload the previous page
+      window.history.back();
+    } catch (error) {
+      // @ts-ignore
+      console.error('Error:' + error.response.data);
+    }
   };
 
   return (
@@ -43,7 +59,7 @@ const LoginPage: React.FC = () => {
         <Navbar />
         <div className="login-container">
           <div className="form-container">
-            <h2 className="form-title">{activeForm === 'login' ? 'Login' : 'Sign Up'}</h2>
+            <h2 className="form-title">{activeForm === 'signin' ? 'Login' : 'Sign Up'}</h2>
             <form className="form" onSubmit={handleSubmit}>
               <input
                 type="email"
@@ -72,11 +88,11 @@ const LoginPage: React.FC = () => {
                 />
               )}
               <button type="submit" className="submit-button">
-                {activeForm === 'login' ? 'Login' : 'Sign Up'}
+                {activeForm === 'signin' ? 'Login' : 'Sign Up'}
               </button>
             </form>
             <p className="form-switch" onClick={handleFormSwitch}>
-              {activeForm === 'login' ? "Don't have an account? Sign up" : 'Already have an account? Login'}
+              {activeForm === 'signin' ? "Don't have an account? Sign up" : 'Already have an account? Login'}
             </p>
           </div>
         </div>
