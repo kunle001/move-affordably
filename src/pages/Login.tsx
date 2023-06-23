@@ -32,11 +32,12 @@ const LoginPage: React.FC = () => {
 
     try {
       const response = await axios.post(`http://localhost:3000/api/users/${activeForm}`, {
-        email,
-        password,
-        confirmPassword
-      });
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword
+      },);
 
+      alert('Logged in Successfully');
       console.log('Login or signup successful');
       console.log('Response:', response.data);
 
@@ -49,9 +50,12 @@ const LoginPage: React.FC = () => {
       window.history.back();
     } catch (error) {
       // @ts-ignore
-      console.error('Error:' + error.response.data);
+
+      // console.error('Error:', error.response.data);
+      alert(error.response.data.errors[0].message);
     }
   };
+
 
   return (
     <>

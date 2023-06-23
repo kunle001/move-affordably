@@ -9,6 +9,7 @@ import Button from '../components/Button';
 import Newsletter from '../components/NewsLetter';
 import Map from '../components/Map';
 import { apartmentType, room } from '../../api/src/models/roomSpec';
+import ReviewCard from '../components/ReviewsCard';
 
 interface DataProps {
   location: {
@@ -31,6 +32,26 @@ interface DataProps {
 }
 
 const Home = () => {
+  const reviews = [
+    {
+      name: 'Wole',
+      rating: 5,
+      comment: 'I really Got my Apartment, This is an awesome site',
+      imageUrl: '../../public/images/user1.png'
+    },
+    {
+      name: 'Mrs Oluyemi',
+      rating: 5,
+      comment: 'try it for your self, this is awesome',
+      imageUrl: '../../public/images/user1.png'
+    },
+    {
+      name: 'Adeyemo',
+      rating: 4.5,
+      comment: 'This has to be the bast if the best!!',
+      imageUrl: '../../public/images/user1.png'
+    }
+  ]
   const images = [
     '../../public/images/house1.png',
     '../../public/images/house2.png',
@@ -112,9 +133,16 @@ const Home = () => {
           See All Apartments
         </button>
       </a>
-      <h5 className="contact-heading">Latest Locations</h5>
-      <div className="map-container">
-        <Map latitude={6.9} longitude={3.4} />
+      <h5 className="contact-heading">Reviews</h5>
+      <div className="reviews-container">
+        {reviews.map((data, i) => (
+          <ReviewCard
+            name={data.name}
+            rating={data.rating}
+            comment={data.comment}
+            imageUrl={data.imageUrl}
+          />
+        ))}
       </div>
       <ul className="line"></ul>
       <About />

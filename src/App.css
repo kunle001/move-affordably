@@ -57,3 +57,12 @@
   color: inherit;
   transition: opacity 0.3s;
 }
+
+/* .review-card {
+  border-radius: 20px;
+  transition: transform 0.3s ease-in-out;
+} */
+
+/* .review-card:hover {
+  transform: translateY(-5px);
+} */

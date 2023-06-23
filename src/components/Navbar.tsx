@@ -1,7 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+import axios from 'axios';
 
 const Navbar = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/users/currentUser', { withCredentials: true });
+        setCurrentUser(response.data);
+      } catch (error) {
+        // @ts-ignore
+        console.log(error.response.data.errors[0].message);
+      }
+    };
+
+    fetchCurrentUser();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await axios.post('http://localhost:3000/api/users/logout', null, { withCredentials: true });
+      setCurrentUser(null);
+      window.location.reload();
+    } catch (error) {
+      // @ts-ignore
+      console.log(error.response.data.errors[0].message);
+    }
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div className="container-fluid">
@@ -21,14 +49,26 @@ const Navbar = () => {
               <a className="nav-link" href="/apartments">Apartments</a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/contact-us">Contact</a>
+              <a className="nav-link" href="/contact-us" style={{ color: 'darkorange' }}>My Spec</a>
             </li>
             {/* <li className="nav-item">
               <a className="nav-link" href="#">Blog</a>
             </li> */}
-            <li className="nav-item">
-              <a className="nav-link" href="/login">Login/Signup</a>
-            </li>
+            {currentUser ? (
+              <>
+                <li className="nav-item">
+                  <a className="nav-link" href="/my-profile">My Profile</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="/my-profile" onClick={handleLogout}>Logout</a>
+                </li>
+              </>
+            ) : (
+              <li className="nav-item">
+                <a className="nav-link" href="/login">Login/Signup</a>
+              </li>
+            )}
+
             <li className="nav-item">
               <a className="nav-link" href="#">
                 <FaFacebook />
@@ -53,6 +93,6 @@ const Navbar = () => {
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;

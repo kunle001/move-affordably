@@ -13,7 +13,7 @@
 
 .slider-image {
   width: 100%;
-  height: 420px;
+  height: 520px;
   object-fit: cover;
   border-radius: 5px;
 }
@@ -123,7 +123,7 @@
 }
 
 .apartment-price {
-  font-size: x-large;
+  font-size: large;
   color: #338a2d;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
@@ -151,4 +151,9 @@
   padding-bottom: 10px;
   /* Add your custom styles */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.totalpackage{
+  color: #338a2d;
+  size: 2rem;
 }

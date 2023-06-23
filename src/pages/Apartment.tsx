@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Route } from 'react-router-dom';
 import Slider, { Settings } from 'react-slick';
-import {
-  FaHeart,
-  FaMoneyBillWave,
-  FaSwimmingPool,
-  FaParking,
-  FaShieldAlt,
-} from 'react-icons/fa';
+import { GiMoneyStack } from 'react-icons/gi';
+import { IoBedOutline } from 'react-icons/io5';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '../../public/css/Apartment.css';
@@ -32,7 +27,12 @@ interface CommentData {
 }
 
 interface DataProps {
-  location: Location;
+  location: {
+    type: string;
+    coordinates: number[];
+    address: string;
+    description?: string;
+  };
   checkpoints: string[];
   annualPackage: number;
   totalPackage: number;
@@ -158,31 +158,32 @@ const SingleApartment: React.FC = () => {
       <div className="single-apartment-details">
         <h2 className="description-header">DESCRIPTION</h2>
         <p className="description">{backendData.description}</p>
+        <ul className="line"></ul>
         <div className="apartment-info">
           <div className="apartment-info-item">
-            <h3>
-              <small>Yearly Package: </small> {backendData.annualPackage} Naira/Year
-            </h3>
             <h1 className="apartment-price">
-              <FaMoneyBillWave /><small>Total Package</small> {backendData.totalPackage} Naira
+              <GiMoneyStack />
+              <small>Yearly Package:</small> {backendData.annualPackage}{' '}
+              <span>&#8358;</span>
+            </h1>
+            <h1 className="apartment-price">
+              <GiMoneyStack />
+              <small>Total Package:</small> {backendData.totalPackage}{' '}
+              <span>&#8358;</span>
             </h1>
           </div>
+
           <div className="apartment-info-item">
-            <h3>Amenities</h3>
+            <h5>SPECS</h5>
             <ul>
               <li>
-                <FaSwimmingPool /> Gym
+                <IoBedOutline style={{ color: 'darkblue' }} />{' '}
+                {backendData.roomCategory} Room
               </li>
-              <li>
-                <FaSwimmingPool /> Swimming pool
-              </li>
-              <li>
-                <FaParking /> Parking
-              </li>
-              <li>
-                <FaShieldAlt /> 24/7 Security
-              </li>
+              <li>{backendData.apartmentType}</li>
             </ul>
+            <b>Landlord Requirements are as follows</b>
+            <p style={{ color: 'GrayText' }}>{backendData.landlordSpecs}</p>
           </div>
           <div className="apartment-info-item">
             <h3>Location</h3>
@@ -192,10 +193,7 @@ const SingleApartment: React.FC = () => {
       </div>
       <div className="single-apartment-map">
         <div className="map-container">
-          <Map
-            longitude={12}
-            latitude={23}
-          />
+          <Map longitude={7} latitude={8} />
         </div>
       </div>
       <div className="single-apartment-comments-section">

@@ -1,12 +1,21 @@
 .apartment-card {
+  position: relative;
   width: 320px;
+  height: 450px;
   margin-bottom: 20px;
   border-radius: 5px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 10px;
-  padding: 5px
+  padding: 5px;
+  perspective: 800px;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
 
+.apartment-card:hover {
+  transform: rotateY(5deg);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .apartment-card-link {
@@ -18,8 +27,9 @@
 
 .apartment-card-link:hover {
   opacity: 0.8;
-  color: rgb(191, 173, 220);
+  color: rgb(0, 0, 0);
 }
+
 .slideshow-container {
   position: relative;
   width: 100%;
@@ -47,10 +57,23 @@
 .slide-image {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 .card-body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  transform: translateZ(50px);
+  transition: transform 0.5s;
+}
+
+.apartment-card:hover .card-body {
+  transform: translateZ(0);
 }
 
 .card-title {
@@ -63,6 +86,7 @@
   font-size: 14px;
   color: #555;
   margin-bottom: 20px;
+  line-height: 1.5;
 }
 
 .list-group {
@@ -76,13 +100,20 @@
 }
 
 .card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   padding: 15px 20px;
   background-color: #f1f1f1;
   color: #555;
   font-size: 14px;
+  transform: translateZ(50px);
+  transition: transform 0.5s;
+}
+
+.apartment-card:hover .card-footer {
+  transform: translateZ(0);
 }
 
 .card-price {
@@ -113,3 +144,5 @@
 .like-button.liked {
   color: #e74c3c;
 }
+
+/* Add any additional animations or styles here */
