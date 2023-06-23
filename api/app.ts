@@ -21,6 +21,14 @@ import { getOneCommentRouter } from './src/routes/comment/getone';
 import { getAllApartmentRouter } from './src/routes/apartment/getall';
 import path from 'path';
 import cors from 'cors'
+import { reviewRouter } from './src/routes/reviews/new';
+import { getAllReviewsRouter } from './src/routes/reviews/getAll';
+import { createSpecRouter } from './src/routes/specs/new';
+import { getAllSpecsRouter } from './src/routes/specs/getAll';
+import { getOneUserRouter } from './src/routes/users/getOne';
+import { currentUserRouter } from './src/routes/users/currentUser';
+import { approveSpecRoute } from './src/routes/specs/update';
+import { SpecNotification } from './src/routes/specs/notification';
 
 
 
@@ -51,6 +59,8 @@ app.use(signoutRouter)
 app.use(updateUserRouter)
 app.use(forgotPasswordRouter)
 app.use(resetPasswordRouter)
+app.use(getOneUserRouter)
+app.use(currentUserRouter)
 
 
 // Apartment routes
@@ -65,6 +75,14 @@ app.use(createCommentRouter)
 app.use(updateCommentRouter)
 app.use(deleteCommentRouter)
 app.use(getOneCommentRouter)
+app.use(reviewRouter)
+app.use(getAllReviewsRouter)
+
+// specification router
+app.use(createSpecRouter);
+app.use(getAllSpecsRouter)
+app.use(approveSpecRoute)
+app.use(SpecNotification);
 
 app.all('*', async () => {
   throw new NotFoundError('page not found')
