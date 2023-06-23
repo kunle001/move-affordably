@@ -26,7 +26,7 @@ const uploadPicture = upload.fields([{ name: 'images', maxCount: 10 }]);
 
 const resizeApartmentImages = async (req: Request, res: Response, next: NextFunction) => {
   // @ts-ignore
-  if (!req.files.images) return next();
+  if (!req.files) return next();
   req.body.images = [];
   await Promise.all(
     // @ts-ignore
