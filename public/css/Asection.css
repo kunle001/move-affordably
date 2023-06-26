@@ -1,0 +1,70 @@
+.TileContainer__column {
+  display: flex;
+  align-items: center;
+}
+
+.WelcomeMessage {
+  background-color: #f2f2f2;
+  padding: 20px;
+  text-align: center;
+}
+
+.WelcomeMessage__wrapper {
+  margin-bottom: 20px;
+}
+
+.WelcomeMessage__wrapper h1 {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
+}
+
+.WelcomeMessage__wrapper h2 {
+  font-size: 18px;
+  color: #777;
+  margin: 0;
+}
+
+.Box-sc-kv6pi1-0 {
+  margin-bottom: 20px;
+}
+
+.LinkComponent__Container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.LinkComponent__Label {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.LinkComponent__Label svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  fill: #333;
+}
+
+.LinkComponent__Label h6 {
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+}
+
+.LinkComponent__Underline {
+  width: 100%;
+  height: 2px;
+  background-color: #333;
+}
+
+/* Styles for selected tab */
+.LinkComponent__Container[aria-selected="true"] .LinkComponent__Label h6 {
+  font-weight: bold;
+}
+
+.LinkComponent__Container[aria-selected="true"] .LinkComponent__Underline {
+  background-color: #f50057;
+}

@@ -145,4 +145,25 @@
   color: #e74c3c;
 }
 
-/* Add any additional animations or styles here */
+/* Media Queries for Mobile Mode */
+
+@media (max-width: 768px) {
+  .apartment-card {
+    width: 100%;
+    height: auto;
+  }
+  
+  .slideshow-container {
+    height: 200px;
+  }
+  
+  .card-body,
+  .card-footer {
+    transform: none;
+  }
+  
+  .apartment-card:hover .card-body,
+  .apartment-card:hover .card-footer {
+    transform: none;
+  }
+}
