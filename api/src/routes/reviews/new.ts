@@ -7,7 +7,8 @@ const router = express.Router();
 router.post('/api/review', currentUser, requireAuth, async (req, res) => {
   let review = Review.build({
     user: req.currentUser!.id,
-    comment: req.body.comment
+    comment: req.body.comment,
+    rating: req.body.rating
   });
 
   await review.save();

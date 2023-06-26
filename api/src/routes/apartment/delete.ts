@@ -15,10 +15,14 @@ router.delete('/api/apartments/delete/:id',
     if (!apartment) throw new NotFoundError('no apartment with this id');
 
     // Delete apartment images from directory '../../../../public/images'
-    apartment.images.forEach((image) => {
-      let imagePath = path.join(__dirname, '../../../../public/images', image)
-      console.log(imagePath)
-      if (fs.existsSync(imagePath)) {
+    const imagePrefix = `apartment-${req.params.id}`;
+    const imageDir = path.join(__dirname, '..', '..', '..', '..', 'public', 'images');
+    const files = fs.readdirSync(imageDir);
+    const regex = new RegExp(`^${imagePrefix}`);
+
+    files.forEach((file) => {
+      if (regex.test(file)) {
+        const imagePath = path.join(imageDir, file);
         fs.unlinkSync(imagePath)
       }
     })

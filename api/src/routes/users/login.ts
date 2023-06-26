@@ -29,16 +29,23 @@ router.post('/api/users/signin', [
 
   const userjwt = jwt.sign({
     id: user.id,
-    email: user.email
+    email: user.email,
+    image: user.image,
   }, process.env.JWT_KEY!);
 
   // Store it on session
   res.cookie('secretoken', userjwt, {
+    expires: new Date(
+      Date.now() + 2 * 2 * 60 * 60 * 1000
+    ),
     httpOnly: true,
     secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
   });
 
-  res.status(200).send(user)
+  res.status(200).json({
+    user,
+    token: userjwt
+  })
 });
 
 export { router as signinRouter }

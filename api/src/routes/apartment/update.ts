@@ -4,6 +4,8 @@ import { Apartment } from '../../models/apartment';
 import multer, { FileFilterCallback } from 'multer';
 import sharp from 'sharp';
 import mongoose from 'mongoose';
+import path from 'path';
+import fs from 'fs'
 
 const router = express.Router();
 
@@ -28,6 +30,18 @@ const resizeApartmentImages = async (req: Request, res: Response, next: NextFunc
   // @ts-ignore
   if (!req.files) return next();
   req.body.images = [];
+
+  const imagePrefix = `apartment-${req.params.id}`;
+  const imageDir = path.join(__dirname, '..', '..', '..', '..', 'public', 'images');
+  const files = fs.readdirSync(imageDir);
+  const regex = new RegExp(`^${imagePrefix}`);
+
+  files.forEach((file) => {
+    if (regex.test(file)) {
+      const imagePath = path.join(imageDir, file);
+      fs.unlinkSync(imagePath)
+    }
+  })
   await Promise.all(
     // @ts-ignore
     req.files['images'].map(async (file: Express.Multer.File, i: number) => {
