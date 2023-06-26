@@ -91,6 +91,7 @@ const apartmentsSchema = new Schema({
   { toJSON: { virtuals: true }, toObject: { virtuals: true } });
 
 apartmentsSchema.index({ location: "2dsphere" });
+apartmentsSchema.index({ annualPackage: 1 })
 apartmentsSchema.plugin(updateIfCurrentPlugin);
 
 
