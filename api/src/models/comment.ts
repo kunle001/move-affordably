@@ -41,8 +41,9 @@ const commentSchema = new Schema({
     transform(doc, ret) {
       ret.id = ret._id,
         delete ret._id
-    }
-  }
+    },
+    virtuals: true
+  },
 });
 
 commentSchema.statics.build = (attrs: CommentAttrs) => {
