@@ -6,8 +6,7 @@ const About = () => {
     <div className="about-container">
       <ul className='line'></ul>
       <div className="about-content">
-        <h1 className="about-heading">About Moove Now</h1>
-        <ul className='line'></ul>
+        <h1 className="about-heading">Our Mission</h1>
         <div className="about-description">
           <p>
             Moove Now is your ultimate solution for hassle-free relocation. Discover your dream apartment effortlessly with detailed information, visuals, and virtual tours all in one place. Browse through a wide selection of apartments, view high-quality images and floor plans, and make informed decisions about your future living space.
