@@ -10,6 +10,8 @@ import Newsletter from '../components/NewsLetter';
 import Map from '../components/Map';
 import { apartmentType, room } from '../../api/src/models/roomSpec';
 import ReviewCard from '../components/ReviewsCard';
+import axios from 'axios'
+import Asection from '../components/Asection';
 
 interface DataProps {
   location: {
@@ -29,9 +31,38 @@ interface DataProps {
   createdAt: Date;
   description: string;
   id: string;
+};
+
+interface ReviewData {
+  rating: number,
+  comment: string;
+  user: {
+    name: string,
+    image: string,
+  },
+  createdAt: number
 }
 
 const Home = () => {
+  const [reviewsData, setReviewsData] = useState<ReviewData[]>([{
+    rating: 0,
+    comment: '',
+    user: {
+      name: '',
+      image: '',
+    },
+    createdAt: 0
+  }]);
+
+  useEffect(() => {
+    axios.get<ReviewData[]>('http://localhost:3000/api/reviews')
+      .then((res) => {
+        setReviewsData(res.data)
+      }).catch((err) => {
+        console.log(err)
+      })
+  }, []);
+
   const reviews = [
     {
       name: 'Wole',
@@ -71,14 +102,15 @@ const Home = () => {
   }, []);
 
   return (
-    <div style={{ position: 'relative' }}>
-      <div className="display"></div>
-      <Slideshow />
-      <Navbar />
+    <div className='home-page-container'>
+      <div className="display">
+        <Navbar />
+        <Slideshow />
+      </div>
       <div className="hot-apartments-heading">
         <ul className="line"></ul>
-        <b>AVAILABLE APARTMENTS</b>
       </div>
+      <b className='contact-heading'>APARTMENTS</b>
       <ul className="line"></ul>
       <div className="cards">
         {backendData.map(
@@ -122,7 +154,8 @@ const Home = () => {
           style={{
             padding: '10px',
             borderRadius: '5px',
-            backgroundColor: 'rgb(133, 180, 165)',
+            color: '#1d4e11',
+            backgroundColor: 'white',
             margin: '5px auto',
             display: 'block',
             border: '0.5px',
@@ -130,21 +163,21 @@ const Home = () => {
             maxWidth: '300px',
           }}
         >
-          See All Apartments
+          All Apartments
         </button>
       </a>
-      <h5 className="contact-heading">Reviews</h5>
+      <h5 className="contact-heading">Latest Reviews</h5>
       <div className="reviews-container">
-        {reviews.map((data, i) => (
+        {reviewsData.map((data, i) => (
           <ReviewCard
-            name={data.name}
+            name={data.user.name}
             rating={data.rating}
             comment={data.comment}
-            imageUrl={data.imageUrl}
+            date={data.createdAt}
+            imageUrl={`../../public/images/users/${data.user.image}`}
           />
         ))}
       </div>
-      <ul className="line"></ul>
       <About />
       <ul className="line"></ul>
       <Newsletter />

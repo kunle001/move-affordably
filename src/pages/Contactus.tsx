@@ -32,28 +32,11 @@ const ContactUs: React.FC = () => {
       <Navbar />
       <div className="contact-container">
         <form className="contact-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <input
-              placeholder='name'
-              type="text"
-              id="name"
-              name="name"
-              className="input"
-              value={formData.name}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              placeholder='email'
-              type="email"
-              id="email"
-              name="email"
-              className="input"
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </div>
+          <p>please make your request direct and concise, we Ensure to get you your specification
+            in maximum of 7 working days, if in an unfortunate cirmumstance we are unable to get you with
+            what you requested for, you can still make another request, or something similar,
+          </p>
+          <p style={{ color: 'darkorange' }}> <b>NB: Kindly make your message direct and simple, Thank you!</b></p>
           <div className="form-group">
             <textarea
               placeholder='message'

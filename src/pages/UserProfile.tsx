@@ -4,6 +4,7 @@ import axios from 'axios';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import '../../public/css/UserProfile.css';
+import Cookies from 'js-cookie';
 
 interface UserProfile {
   name: string;
@@ -26,7 +27,9 @@ interface Notification {
 }
 
 const UserProfilePage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const currentUserCookie = Cookies.get('currentUser');
+  const currentUser = currentUserCookie ? JSON.parse(currentUserCookie) : null
+
   const [backendData, setBackendData] = useState<UserProfile>({
     name: '',
     email: '',
@@ -37,7 +40,7 @@ const UserProfilePage: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get<UserProfile>(`http://localhost:3000/api/user/${id}`)
+      .get<UserProfile>(`http://localhost:3000/api/user/${currentUser!.id}`)
       .then((response) => {
         setBackendData(response.data);
         // console.log(response.data);
@@ -85,7 +88,7 @@ const UserProfilePage: React.FC = () => {
       }
     ];
     setNotifications(dummyNotifications);
-  }, [id]);
+  }, []);
 
   return (
     <>

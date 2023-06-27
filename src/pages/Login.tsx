@@ -4,17 +4,18 @@ import '../../public/css/Login.css';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { response } from 'express';
+import Cookies from 'js-cookie';
 
 const LoginPage: React.FC = () => {
   const [activeForm, setActiveForm] = useState<'signin' | 'signup'>('signin');
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordConfirm, setConfirmPassword] = useState('');
 
   const handleFormSwitch = () => {
     setActiveForm(prevForm => (prevForm === 'signin' ? 'signup' : 'signin'));
   };
-
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
@@ -26,32 +27,87 @@ const LoginPage: React.FC = () => {
   const handleConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(event.target.value);
   };
+  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value)
+  }
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSignup = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const response = await axios.post(`http://localhost:3000/api/users/${activeForm}`, {
+        name,
+        email,
+        password,
+        passwordConfirm
+      });
+
+      alert('Signed Up Successfully');
+
+      Cookies.set('secretoken', response.data.token, { expires: 7 });
+      Cookies.set(
+        'currentUser',
+        JSON.stringify({
+          name: response.data.user.name,
+          id: response.data.user.id,
+          role: response.data.user.role,
+          email: response.data.user.email,
+          image: response.data.user.image,
+          points: response.data.user.points,
+          phone: response.data.user.phone
+        }),
+        { expires: 7 }
+      );
+      alert('Congratulations You are signed up')
+      // console.log('Response:', response.data);
+
+      // Reset form fields
+      setName('');
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+      window.history.back();
+    } catch (err) {
+      // @ts-ignore
+      alert(err.response.data.errors[0].message);
+    }
+  };
+
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
       const response = await axios.post(`http://localhost:3000/api/users/${activeForm}`, {
         email: email,
         password: password,
-        confirmPassword: confirmPassword
-      },);
+      });
 
       alert('Logged in Successfully');
-      console.log('Login or signup successful');
+
+      Cookies.set('secretoken', response.data.token, { expires: 7 });
+      Cookies.set(
+        'currentUser',
+        JSON.stringify({
+          name: response.data.user.name,
+          id: response.data.user.id,
+          role: response.data.user.role,
+          email: response.data.user.email,
+          image: response.data.user.image,
+          points: response.data.user.points,
+          phone: response.data.user.phone
+        }),
+        { expires: 7 }
+      );
+
       console.log('Response:', response.data);
 
       // Reset form fields
       setEmail('');
       setPassword('');
       setConfirmPassword('');
-
-      // Reload the previous page
       window.history.back();
     } catch (error) {
       // @ts-ignore
-
-      // console.error('Error:', error.response.data);
       alert(error.response.data.errors[0].message);
     }
   };
@@ -64,7 +120,17 @@ const LoginPage: React.FC = () => {
         <div className="login-container">
           <div className="form-container">
             <h2 className="form-title">{activeForm === 'signin' ? 'Login' : 'Sign Up'}</h2>
-            <form className="form" onSubmit={handleSubmit}>
+            <form className="form" onSubmit={activeForm === 'signin' ? handleLogin : handleSignup}>
+              {activeForm === 'signup' && (
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="Your Name"
+                  value={name}
+                  onChange={handleNameChange}
+                  required
+                />
+              )}
               <input
                 type="email"
                 className="input"
@@ -86,7 +152,7 @@ const LoginPage: React.FC = () => {
                   type="password"
                   className="input"
                   placeholder="Confirm Password"
-                  value={confirmPassword}
+                  value={passwordConfirm}
                   onChange={handleConfirmPasswordChange}
                   required
                 />
