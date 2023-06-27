@@ -9,6 +9,8 @@ interface CurrentUser {
   id: string;
   role: 'admin' | 'user';
   image?: string;
+  points: number,
+  phone: number,
 }
 
 const Navbar: React.FC = () => {
@@ -70,14 +72,14 @@ const Navbar: React.FC = () => {
                   <a className="nav-link" href="/" onClick={handleLogout}>Logout</a>
                 </li>
                 <li className="nav-item">
-                  <b> <a className="nav-link" href="/">
-                    <GiMoneyStack className="money-bag-icon" style={{ color: 'darkgreen' }} />
-                    5 Points
+                  <b> <a className="nav-link">
+                    <GiMoneyStack className="money-bag-icon" style={{ color: 'darkgreen', cursor: 'pointer' }} />
+                    Points
                   </a>
                   </b>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/">Buy Points</a>
+                  <a className="nav-link" href="/buy-points">Buy Points</a>
                 </li>
                 {
                   // @ts-ignore
