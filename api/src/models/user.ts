@@ -8,6 +8,8 @@ interface userAttrs {
   email: string;
   image?: string;
   password: string;
+  phone: number;
+  points?: number;
   passwordConfirm: string;
 };
 
@@ -16,6 +18,8 @@ interface userDocs extends mongoose.Document {
   email: string;
   image: string;
   password: string;
+  phone: number;
+  points: number
   passwordConfirm: string;
   passwordChangedAt?: Date;
   createdAt: Date;
@@ -40,6 +44,10 @@ const userSchema = new mongoose.Schema({
     required: [true, 'provide an email'],
     unique: true
   },
+  phone: {
+    type: Number,
+    required: true
+  },
   password: {
     type: String,
     required: [true, 'you need a password to signup']
@@ -55,6 +63,10 @@ const userSchema = new mongoose.Schema({
   image: {
     type: String,
     default: 'default.png'
+  },
+  points: {
+    type: Number,
+    default: 0
   },
   createdAt: {
     type: mongoose.Schema.Types.Date,

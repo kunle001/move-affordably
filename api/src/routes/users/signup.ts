@@ -12,7 +12,7 @@ router.post('/api/users/signup', [
   body('passwordConfirm').trim().isLength({ min: 8, max: 20 }).withMessage('please confirm your password')
 ], validateRequest, async (req: Request, res: Response) => {
 
-  const { email, name, password, passwordConfirm } = req.body
+  const { email, name, phone, password, passwordConfirm } = req.body
 
   const existingUser = await User.findOne({ email });
   if (existingUser) {
@@ -26,6 +26,7 @@ router.post('/api/users/signup', [
   const user = User.build({
     email,
     name,
+    phone,
     password,
     passwordConfirm
   });

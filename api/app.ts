@@ -29,6 +29,10 @@ import { getOneUserRouter } from './src/routes/users/getOne';
 import { currentUserRouter } from './src/routes/users/currentUser';
 import { approveSpecRoute } from './src/routes/specs/update';
 import { SpecNotification } from './src/routes/specs/notification';
+import { createPaymentRouter } from './src/routes/payments/new';
+import { updatePaymentRouter } from './src/routes/payments/update';
+import { getAllPayments } from './src/routes/payments/getAll';
+import { myTransactionRouter } from './src/routes/payments/my-transcations';
 
 
 
@@ -39,6 +43,7 @@ app.set('trust proxy', true)
 app.use(express.static(path.join(__dirname, 'public')));
 
 // middlewares
+app.use(cors({ origin: true, credentials: true }))
 app.use(json());
 app.use(cookieSession({
   signed: false,
@@ -46,9 +51,8 @@ app.use(cookieSession({
 }));
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser());
-app.use(cors())
 
-
+app.use(currentUser)
 
 // routes
 
@@ -83,6 +87,12 @@ app.use(createSpecRouter);
 app.use(getAllSpecsRouter)
 app.use(approveSpecRoute)
 app.use(SpecNotification);
+
+// payments
+app.use(createPaymentRouter)
+app.use(updatePaymentRouter)
+app.use(getAllPayments)
+app.use(myTransactionRouter)
 
 app.all('*', async () => {
   throw new NotFoundError('page not found')
