@@ -14,18 +14,16 @@ interface CurrentUser {
 }
 
 const Navbar: React.FC = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
   const user = Cookies.get('secretoken');
 
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/users/currentUser', {
-          withCredentials: true
-        });
-        setCurrentUser(response.data);
-        console.log(currentUser)
+        const response = JSON.parse(Cookies.get('currentUser')!)
+        setCurrentUser(response);
+
       } catch (error) {
         // @ts-ignore
         console.log(error.response.data.errors[0].message);
@@ -35,6 +33,9 @@ const Navbar: React.FC = () => {
     fetchCurrentUser();
   }, []);
 
+  useEffect(() => {
+    console.log(currentUser);
+  }, [currentUser]);
   const handleLogout = async () => {
     try {
       Cookies.remove('secretoken');
@@ -50,7 +51,7 @@ const Navbar: React.FC = () => {
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
           <img src="../../public/images/logo.png" alt="Logo" className="logo" style={{ height: '60px', width: '60px', borderRadius: '50%' }} />
-          <b style={{ color: 'rgb(41, 112, 90)' }}>MooveNow</b>
+          <b style={{ color: 'rgb(41, 112, 90)' }}>FonetoHome</b>
         </a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
@@ -70,13 +71,6 @@ const Navbar: React.FC = () => {
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/" onClick={handleLogout}>Logout</a>
-                </li>
-                <li className="nav-item">
-                  <b> <a className="nav-link">
-                    <GiMoneyStack className="money-bag-icon" style={{ color: 'darkgreen', cursor: 'pointer' }} />
-                    Points
-                  </a>
-                  </b>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/buy-points">Buy Points</a>
@@ -101,12 +95,12 @@ const Navbar: React.FC = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="https://twitter.com/fonetohome">
                 <FaTwitter />
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="https://instagram.com/fonetohome?igshid=MzRlODBiNWFlZA==">
                 <FaInstagram />
               </a>
             </li>

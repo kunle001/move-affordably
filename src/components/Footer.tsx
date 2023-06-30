@@ -9,16 +9,16 @@ const Footer = () => {
         <div className="footer-section">
           <h3 className="footer-heading">Contact Us</h3>
           <div className="footer-item">
-            <FaMapMarkerAlt className="icon" />
+            <FaMapMarkerAlt className="icon" style={{ color: 'brown' }} />
             <p className="footer-text">5, Tunde Apatira Street, Akowonjo, Lagos</p>
           </div>
           <div className="footer-item">
-            <FaPhone className="icon" />
-            <p className="footer-text">Phone: (234) 70-39365725</p>
+            <FaPhone className="icon" style={{ color: 'darkgreen' }} />
+            <p className="footer-text">Phone (234) 81-20070611</p>
           </div>
           <div className="footer-item">
-            <FaEnvelope className="icon" />
-            <p className="footer-text">Email: adekunle.olanipekun.ko@gmail.com</p>
+            <FaEnvelope style={{ color: 'darkblue' }} />
+            <p className="footer-text"> <b>wolcenterprise@gmail.com</b></p>
           </div>
         </div>
         <div className="footer-section">
@@ -34,13 +34,13 @@ const Footer = () => {
           <h3 className="footer-heading">Connect with Us</h3>
           <div className="social-icons">
             <a href="#"><FaFacebook className="icon" /></a>
-            <a href="#"><FaTwitter className="icon" /></a>
-            <a href="#"><FaInstagram className="icon" /></a>
+            <a href="https://twitter.com/fonetohome"><FaTwitter className="icon" /></a>
+            <a href="https://instagram.com/fonetohome?igshid=MzRlODBiNWFlZA=="><FaInstagram className="icon" /></a>
           </div>
         </div>
       </div>
       <div className="footer-bottom">
-        <p className="footer-text">&copy; 2023 Moove Now. All rights reserved.</p>
+        <p className="footer-text">&copy; 2023 FoneToHome. All rights reserved.</p>
       </div>
     </footer>
   );
