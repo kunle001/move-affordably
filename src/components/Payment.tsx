@@ -21,8 +21,9 @@ const Payment: React.FC<PaymentProps> = ({ price }) => {
   const user = Cookies.get('currentUser');
   const currentUser: User = JSON.parse(user!);
   const cost = price * 1000
+  const key: string = process.env.flw_publickey!
   const config = {
-    public_key: '********',
+    public_key: key,
     tx_ref: Date.now().toString(),
     amount: cost,
     currency: 'NGN',
