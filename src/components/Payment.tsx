@@ -22,7 +22,7 @@ const Payment: React.FC<PaymentProps> = ({ price }) => {
   const currentUser: User = JSON.parse(user!);
   const cost = price * 1000
   const config = {
-    public_key: 'FLWPUBK_TEST-62e6625f170f5be35f415daac8ad1be0-X',
+    public_key: '********',
     tx_ref: Date.now().toString(),
     amount: cost,
     currency: 'NGN',
