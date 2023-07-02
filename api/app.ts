@@ -33,6 +33,7 @@ import { createPaymentRouter } from './src/routes/payments/new';
 import { updatePaymentRouter } from './src/routes/payments/update';
 import { getAllPayments } from './src/routes/payments/getAll';
 import { myTransactionRouter } from './src/routes/payments/my-transcations';
+import { searchApartmentRouter } from './src/routes/apartment/search';
 
 
 
@@ -45,11 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // middlewares
 app.use(cors({ origin: true, credentials: true }))
 app.use(json());
-app.use(cookieSession({
-  signed: false,
-  // secure: true,
-}));
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser());
 
 app.use(currentUser)
@@ -73,6 +70,7 @@ app.use(updateRouter)
 app.use(deleteRouter)
 app.use(getOneApartmentRouter)
 app.use(getAllApartmentRouter)
+app.use(searchApartmentRouter)
 
 // Comment routes
 app.use(createCommentRouter)

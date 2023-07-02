@@ -5,14 +5,14 @@ import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 interface ApartmentAttrs {
   location: {
     type: string;
-    coordinates: [number];
+    coordinates: number[];
+    local_govt?: string;
     address?: string;
-    description?: string;
   };
-  checkpoints: [string];
+  checkpoints: string[];
   annualPackage: number;
   totalPackage: number;
-  distanceFromCheckPoints: [number];
+  distanceFromCheckPoints: number[];
   images?: [string];
   landlordSpecs: string;
   roomCategory?: room;
@@ -23,9 +23,9 @@ interface ApartmentAttrs {
 interface ApartmentDoc extends Document {
   location: {
     type: string;
-    coordinates: [number];
-    address?: string;
-    description?: string;
+    coordinates: number[];
+    address: string;
+    local_govt: string
   };
   checkpoints: [string];
   annualPackage: number;
@@ -37,10 +37,12 @@ interface ApartmentDoc extends Document {
   apartmentType: apartmentType;
   createdAt: Date;
   description: string
-}
+};
+
 
 interface ApartmentModel extends Model<ApartmentDoc> {
   build(attrs: ApartmentAttrs): ApartmentDoc;
+  search(searchTerm?: string, priceRange?: number, roomSpec?: string): Promise<ApartmentDoc>
 }
 
 const apartmentsSchema = new Schema({
@@ -52,7 +54,7 @@ const apartmentsSchema = new Schema({
     },
     coordinates: [Number],
     address: String,
-    description: String,
+    local_govt: String
   },
   checkpoints: {
     type: [String],
@@ -98,6 +100,29 @@ apartmentsSchema.plugin(updateIfCurrentPlugin);
 apartmentsSchema.statics.build = (attrs: ApartmentAttrs) => {
   return new Apartment(attrs);
 };
+
+apartmentsSchema.statics.search = async function (searchTerm?: string, priceRange?: number, roomSpec?: string) {
+  const query: any = {};
+
+  if (searchTerm) {
+    query.$or = [
+      { 'location.local_govt': { $regex: searchTerm, $options: 'i' } },
+      { address: { $regex: searchTerm, $options: 'i' } },
+    ];
+  }
+
+  if (priceRange) {
+    query.annualPackage = { $lte: priceRange };
+  }
+
+  if (roomSpec) {
+    query.apartmentType = { $eq: roomSpec }
+  }
+
+  const apartments = await this.find(query);
+  return apartments;
+};
+
 
 apartmentsSchema.virtual('comments', {
   ref: 'Comment',

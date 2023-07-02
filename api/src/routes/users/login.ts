@@ -31,6 +31,10 @@ router.post('/api/users/signin', [
     id: user.id,
     email: user.email,
     image: user.image,
+    phone: user.phone,
+    points: user.points,
+    role: user.role,
+    name: user.name
   }, process.env.JWT_KEY!);
 
   // Store it on session

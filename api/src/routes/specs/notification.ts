@@ -13,10 +13,10 @@ router.get('/api/specs/notification', currentUser, requireAuth, async (req, res)
     return res.send('you do not have an order to find an apartment with us');
   }
 
-  notifications = await Spec.find({
-    user: req.currentUser!.id,
-    status: 'found',
-  });
+  // notifications = await Spec.find({
+  //   user: req.currentUser!.id,
+  //   status: 'found',
+  // });
 
   if (!notifications) {
     return res.send('We are still Searching');

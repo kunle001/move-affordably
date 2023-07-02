@@ -4,7 +4,7 @@ import { Apartment } from '../../models/apartment';
 const router = express.Router();
 
 router.get('/api/apartments', async (req, res,) => {
-  console.log(`!!!!!!!!!! ${req.cookies.secretoken}`)
+
   const apartments = await Apartment.find();
 
   res.send(apartments)

@@ -6,7 +6,7 @@ export enum room {
 };
 
 export enum apartmentType {
-  'Two bedroom Flat',
+  'Two Bedroom Flat',
   'Three Bedroom Flat',
   'Mini Flat',
   'Single Room Flat',
