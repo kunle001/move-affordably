@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 interface PaymentAttrs {
   user: string;
-  points: string;
+  points: number;
   transaction: 'credit' | 'debit';
   recipient?: 'form' | 'video';
   apartment?: string
@@ -10,7 +10,7 @@ interface PaymentAttrs {
 
 interface PaymentDocs extends mongoose.Document {
   user: string;
-  points: string;
+  points: number;
   transaction: 'credit' | 'debit';
   recipient?: 'form' | 'video';
   apartment?: string;

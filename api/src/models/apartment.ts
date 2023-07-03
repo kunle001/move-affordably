@@ -18,6 +18,8 @@ interface ApartmentAttrs {
   roomCategory?: room;
   apartmentType: apartmentType;
   description: string;
+  formprice: number;
+  videprice: number;
 }
 
 interface ApartmentDoc extends Document {
@@ -36,7 +38,9 @@ interface ApartmentDoc extends Document {
   roomCategory?: room;
   apartmentType: apartmentType;
   createdAt: Date;
-  description: string
+  description: string;
+  formprice: number;
+  videprice: number;
 };
 
 
@@ -75,6 +79,10 @@ const apartmentsSchema = new Schema({
     type: String,
     required: true
   },
+  formprice: {
+    type: Number
+  },
+  videoprice: Number,
   images: [String],
   createdAt: {
     type: Date,
