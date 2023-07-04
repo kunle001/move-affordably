@@ -9,9 +9,11 @@ import Cookies from 'js-cookie';
 const LoginPage: React.FC = () => {
   const [activeForm, setActiveForm] = useState<'signin' | 'signup'>('signin');
   const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setConfirmPassword] = useState('');
+
 
   const handleFormSwitch = () => {
     setActiveForm(prevForm => (prevForm === 'signin' ? 'signup' : 'signin'));
@@ -19,6 +21,7 @@ const LoginPage: React.FC = () => {
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
+
 
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
@@ -29,6 +32,10 @@ const LoginPage: React.FC = () => {
   };
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value)
+  };
+
+  const handlePhoneChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPhone(event.target.value)
   }
 
   const handleSignup = async (event: FormEvent<HTMLFormElement>) => {
@@ -39,12 +46,14 @@ const LoginPage: React.FC = () => {
         name,
         email,
         password,
-        passwordConfirm
-      });
+        passwordConfirm,
+        phone
+      },
+        { withCredentials: true });
 
       alert('Signed Up Successfully');
 
-      Cookies.set('secretoken', response.data.token, { expires: 7 });
+
       Cookies.set(
         'currentUser',
         JSON.stringify({
@@ -80,11 +89,12 @@ const LoginPage: React.FC = () => {
       const response = await axios.post(`http://localhost:3000/api/users/${activeForm}`, {
         email: email,
         password: password,
-      });
+      },
+        { withCredentials: true });
 
       alert('Logged in Successfully');
 
-      Cookies.set('secretoken', response.data.token, { expires: 7 });
+      // Cookies.set('secretoken', response.data.token, { expires: 7 });
       Cookies.set(
         'currentUser',
         JSON.stringify({
@@ -131,6 +141,16 @@ const LoginPage: React.FC = () => {
                   required
                 />
               )}
+              {activeForm === 'signup' && (
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="Phone Number"
+                  value={phone}
+                  onChange={handlePhoneChange}
+                  required
+                />
+              )}
               <input
                 type="email"
                 className="input"
@@ -156,6 +176,7 @@ const LoginPage: React.FC = () => {
                   onChange={handleConfirmPasswordChange}
                   required
                 />
+
               )}
               <button type="submit" className="submit-button">
                 {activeForm === 'signin' ? 'Login' : 'Sign Up'}

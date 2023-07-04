@@ -5,140 +5,164 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import '../../public/css/UserProfile.css';
 import Cookies from 'js-cookie';
+import { GiMoneyStack } from 'react-icons/gi';
+import Transactions from '../components/Transactions';
+import Notification from '../components/Notification';
 
 interface UserProfile {
   name: string;
   email: string;
   image: string;
+  phone: number;
+  points: number;
+  role: string
 }
 
-interface Order {
-  id: string;
-  status: 'Cancelled' | 'Approved';
-  productName: string;
-  quantity: number;
-  // Other order properties
+interface Transaction {
+  createdAt: number;
+  transaction: 'credit' | 'debit';
+  points: number;
+  recipient: 'form' | 'video' | null;
 }
 
-interface Notification {
-  id: string;
-  message: string;
-  // Other notification properties
+interface Notifications {
+  specification: string;
+  createdAt: number;
+  status: 'found' | 'searching' | 'not found';
+  apartment?: string[];
+};
+
+interface currentUser {
+
 }
 
 const UserProfilePage: React.FC = () => {
   const currentUserCookie = Cookies.get('currentUser');
-  const currentUser = currentUserCookie ? JSON.parse(currentUserCookie) : null
+  const currentUser = currentUserCookie ? JSON.parse(currentUserCookie) : null;
+  const [transactions, setTransactions] = useState<Transaction[]>([
+    {
+      createdAt: Date.now(),
+      transaction: 'debit',
+      points: 0,
+      recipient: null,
+    },
+  ]);
+
+  const [notifications, setNotifications] = useState<Notifications[]>([
+    {
+      specification: '',
+      createdAt: Date.now(),
+      status: 'searching',
+      apartment: ['123'],
+    },
+  ]);
 
   const [backendData, setBackendData] = useState<UserProfile>({
     name: '',
     email: '',
-    image: ''
+    image: '',
+    points: 0,
+    role: '',
+    phone: 0,
   });
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(() => {
     axios
       .get<UserProfile>(`http://localhost:3000/api/user/${currentUser!.id}`)
       .then((response) => {
         setBackendData(response.data);
-        // console.log(response.data);
       })
       .catch((error) => {
         console.log('Error:', error);
       });
-
-    // Fetch orders (dummy data)
-    const dummyOrders: Order[] = [
-      {
-        id: '1',
-        status: 'Cancelled',
-        productName: 'Product A',
-        quantity: 2
-      },
-      {
-        id: '2',
-        status: 'Approved',
-        productName: 'Product B',
-        quantity: 1
-      },
-      {
-        id: '3',
-        status: 'Cancelled',
-        productName: 'Product C',
-        quantity: 3
-      }
-    ];
-    setOrders(dummyOrders);
-
-    // Fetch notifications (dummy data)
-    const dummyNotifications: Notification[] = [
-      {
-        id: '1',
-        message: 'You have a new order!'
-      },
-      {
-        id: '2',
-        message: 'Payment successful'
-      },
-      {
-        id: '3',
-        message: 'Your order has been shipped'
-      }
-    ];
-    setNotifications(dummyNotifications);
   }, []);
+
+  useEffect(() => {
+    const fetchNot = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/specs/notification', {
+          withCredentials: true,
+        });
+        setNotifications(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchNot();
+  }, []);
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/payments/my-transaction', {
+          withCredentials: true,
+        });
+        setTransactions(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchTransactions();
+  }, []);
+  const user = Cookies.get('currentUser');
+
+  if (!user) {
+    alert('You need to login to access this page');
+    window.location.href = '/login';
+    return null; // Add a return statement here to prevent further rendering
+  }
 
   return (
     <>
       <Navbar />
       <div className="user-profile">
         <div className="avatar-container">
-          <div className="blur-background"></div>
-          <img className="avatar" src={`../../public/images/${backendData.image}`} alt="User Avatar" />
+          <div className="cover"></div>
+          <img className="avatar" src={`../../public/images/users/${backendData.image}`} alt="User Avatar" />
         </div>
+        <h2 className="user-name">{backendData.name.toLocaleUpperCase()}</h2>
         <div className="user-info">
-          <h2 className="user-name">{backendData.name}</h2>
-          <p className="user-email">{backendData.email}</p>
+          <p className="user-email">Email: {backendData.email}</p>
+          <b>
+            <span style={{ color: 'yellowgreen' }}> Account Balance: </span>
+            <GiMoneyStack className="money-bag-icon" style={{ color: 'darkgreen', cursor: 'pointer' }} />
+            {backendData.points} Points
+          </b>
         </div>
-        <div className="orders-section">
-          <h3>My Orders</h3>
-          <div className="order-list">
-            <div className="order-category">
-              <h4>Cancelled Orders</h4>
-              {orders
-                .filter((order) => order.status === 'Cancelled')
-                .map((order) => (
-                  <div key={order.id} className="order-item">
-                    <h5>{order.productName}</h5>
-                    <p>Quantity: {order.quantity}</p>
-                    {/* Display additional order information */}
-                  </div>
-                ))}
-            </div>
-            <div className="order-category">
-              <h4>Approved Orders</h4>
-              {orders
-                .filter((order) => order.status === 'Approved')
-                .map((order) => (
-                  <div key={order.id} className="order-item">
-                    <h5>{order.productName}</h5>
-                    <p>Quantity: {order.quantity}</p>
-                    {/* Display additional order information */}
-                  </div>
-                ))}
-            </div>
+        <div className='nots'>
+          <div className='notifications-section'>
+            <h3> My Requests</h3>
+            {
+              notifications.map((spec, index) => (
+                <Notification
+                  key={index}
+                  specification={spec.specification}
+                  date={spec.createdAt}
+                  status={spec.status}
+                  apartment={spec.apartment}
+                />
+              ))
+            }
           </div>
-        </div>
-        <div className="notifications-section">
-          <h3>Notifications</h3>
-          {notifications.map((notification) => (
-            <div key={notification.id} className="notification-item">
-              <p>{notification.message}</p>
-              {/* Display additional notification information */}
-            </div>
-          ))}
+          <ul className='line' />
+          <div className="notifications-section">
+            <h3>My Transactions</h3>
+            {
+              transactions.map((data, index) => (
+                <Transactions
+                  key={index}
+                  date={data.createdAt}
+                  type={data.transaction}
+                  amount={data.points}
+                  recipient={data.recipient}
+
+                />
+              ))
+            }
+          </div>
+
         </div>
       </div>
       <Footer />

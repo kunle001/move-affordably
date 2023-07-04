@@ -10,15 +10,8 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Comment from '../components/Comment';
 import Map from '../components/Map';
-import { apartmentType, room } from '../../api/src/models/roomSpec';
 import axios from 'axios';
-
-interface Location {
-  type: string;
-  coordinates: number[];
-  address: string;
-  description?: string;
-}
+import { FaMapMarkerAlt, FaWarehouse, FaBook } from 'react-icons/fa';
 
 interface CommentData {
   comment: string;
@@ -31,18 +24,20 @@ interface DataProps {
     type: string;
     coordinates: number[];
     address: string;
-    description?: string;
+    local_govt: string
   };
-  checkpoints: string[];
+  checkpoints: [string];
   annualPackage: number;
   totalPackage: number;
-  distanceFromCheckPoints: number[];
-  images: string[];
+  distanceFromCheckPoints: [number];
+  images: [string];
   landlordSpecs: string;
-  roomCategory?: room;
-  apartmentType: '';
+  roomCategory?: string;
+  apartmentType: string;
   createdAt: Date;
   description: string;
+  formprice: number;
+  videprice: number;
   comments: CommentData[];
 }
 
@@ -57,8 +52,9 @@ const SingleApartment: React.FC = () => {
   const [backendData, setBackendData] = useState<DataProps>({
     location: {
       type: '',
-      coordinates: [],
+      coordinates: [1, 2],
       address: '',
+      local_govt: ''
     },
     checkpoints: [''],
     annualPackage: 0,
@@ -70,6 +66,8 @@ const SingleApartment: React.FC = () => {
     createdAt: new Date(),
     description: '',
     comments: [],
+    formprice: 0,
+    videprice: 0
   });
 
   useEffect(() => {
@@ -84,13 +82,6 @@ const SingleApartment: React.FC = () => {
       });
   }, [id]);
 
-  const apartmentImages = [
-    'house4.png',
-    'house5.png',
-    'house6.png',
-    'house7.png',
-    'house10.png',
-  ];
 
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
@@ -171,29 +162,33 @@ const SingleApartment: React.FC = () => {
               <small>Total Package:</small> {backendData.totalPackage}{' '}
               <span>&#8358;</span>
             </h1>
+            <b style={{ color: 'brown' }}> It costs {backendData.formprice} Points to fill form for this apartment</b>
           </div>
 
           <div className="apartment-info-item">
-            <h5>SPECS</h5>
+            <b> <FaWarehouse style={{ color: 'red', margin: '10px' }} /> House Specs</b>
             <ul>
-              <li>
-                <IoBedOutline style={{ color: 'darkblue' }} />{' '}
-                {backendData.roomCategory} Room
+              <li style={{ color: 'GrayText' }}>
+                {backendData.roomCategory?.toUpperCase()} ROOM
               </li>
-              <li>{backendData.apartmentType}</li>
+              <li style={{ color: 'GrayText' }}>{backendData.apartmentType.toUpperCase()}</li>
             </ul>
-            <b>Landlord Requirements are as follows</b>
-            <p style={{ color: 'GrayText' }}>{backendData.landlordSpecs}</p>
+            <b> <FaBook style={{ color: 'darkcyan', margin: '10px' }} />Landlord Requirements are as follows</b>
+            <ul>
+              <li style={{ color: 'GrayText' }}>{backendData.landlordSpecs}</li>
+            </ul>
           </div>
           <div className="apartment-info-item">
-            <h3>Location</h3>
+            <b> <FaMapMarkerAlt className="icon" style={{ color: 'brown' }} />Location </b>
             <p>{backendData.location.address}</p>
+            <b style={{ color: 'yellowgreen' }}>{backendData.location.local_govt.toUpperCase()}</b>
           </div>
         </div>
       </div>
       <div className="single-apartment-map">
         <div className="map-container">
-          <Map longitude={7} latitude={8} />
+          <Map longitude={backendData.location.coordinates[0]}
+            latitude={backendData.location.coordinates[1]} />
         </div>
       </div>
       <div className="single-apartment-comments-section">
@@ -211,18 +206,19 @@ const SingleApartment: React.FC = () => {
         ))}
         <div className="comments">{renderComments()}</div>
         <div className="add-comment">
-          <textarea
+          {/* <textarea
             style={{ width: '500px' }}
             placeholder="Add a comment"
             value={newComment}
             onChange={handleCommentChange}
-          />
+          /> */}
           <button className="add-comment-button" onClick={handleAddComment}>
             Add Comment
           </button>
         </div>
       </div>
       <div className="single-apartment-actions-section">
+
         <button className="payment-button" onClick={handlePayment}>
           Pay
         </button>
@@ -232,11 +228,6 @@ const SingleApartment: React.FC = () => {
   );
 };
 
-// const SingleApartmentWithRoute: React.FC = () => {
-//   const { id } = useParams<{ id: string }>();
 
-//   console.log(`!!!!!!!!!!! ${id}`);
-//   return <Route path={`/apartment/${id}`} element={<SingleApartment />} />;
-// };
 
 export default SingleApartment;

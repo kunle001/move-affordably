@@ -3,28 +3,27 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ApartmentCard from '../components/ApartmentCard';
 import '../../public/css/AllApartment.css';
-import Filter from '../components/Filter';
 import axios from 'axios';
-import { apartmentType, room } from '../../api/src/models/roomSpec';
+import { room, apartmentType } from '../../api/src/models/roomSpec';
 
 interface Filters {
   price: string;
   location: string;
-  transportCost: string;
+  roomType: string;
 }
 
 interface DataProps {
   location: {
-    type: string;
-    coordinates: [number];
+    coordinates: number[];
     address: string;
-    description?: string;
+    local_govt: string;
+    description: string;
   };
-  checkpoints: [string];
+  checkpoints: string[];
   annualPackage: number;
   totalPackage: number;
-  distanceFromCheckPoints: [number];
-  images: [string];
+  distanceFromCheckPoints: number[];
+  images: string[];
   landlordSpecs: string;
   roomCategory?: room;
   apartmentType: apartmentType;
@@ -33,26 +32,17 @@ interface DataProps {
   id: string;
 }
 
-const images = [
-  '../../public/images/house1.png',
-  '../../public/images/house2.png',
-  '../../public/images/house 3.png',
-  '../../public/images/house4.png',
-  '../../public/images/house5.png',
-  '../../public/images/house6.png',
-];
-
 const AllApartments: React.FC = () => {
   const totalApartments = 50;
   const apartmentsPerPage = 6;
   const totalPages = Math.ceil(totalApartments / apartmentsPerPage);
-  const [backendData, setbackendData] = useState<DataProps[]>([]);
+  const [backendData, setBackendData] = useState<DataProps[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get<DataProps[]>('http://localhost:3000/api/apartments');
-        setbackendData(res.data);
+        setBackendData(res.data);
       } catch (err) {
         console.error('Error Fetching data:', err);
       }
@@ -64,9 +54,8 @@ const AllApartments: React.FC = () => {
   const [filters, setFilters] = useState<Filters>({
     price: '',
     location: '',
-    transportCost: '',
+    roomType: '',
   });
-  const [filterVisible, setFilterVisible] = useState(false); // New state for filter visibility
 
   const handleNextPage = (): void => {
     if (currentPage < totalPages) {
@@ -82,15 +71,25 @@ const AllApartments: React.FC = () => {
     setCurrentPage((prevPage) => prevPage - 1);
   };
 
-  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleFilterChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ): void => {
     const { name, value } = event.target;
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
-    setCurrentPage(1); // Reset to the first page when filters change
   };
 
-  const toggleFilterVisibility = (): void => {
-    setFilterVisible((prevVisible) => !prevVisible);
-  };
+  // const applyFilters = async (): Promise<void> => {
+  //   try {
+  //     const apartments = await axios.post<DataProps[]>('http://localhost:3000/api/search/apartment', {
+  //       searchTerm: filters.location,
+  //       priceRange: filters.price,
+  //       roomSpec: filters.roomType,
+  //     });
+  //     setBackendData(apartments.data);
+  //   } catch (error) {
+  //     console.error('Error applying filters:', error);
+  //   }
+  // };
 
   const startIndex = (currentPage - 1) * apartmentsPerPage;
   const endIndex = startIndex + apartmentsPerPage;
@@ -99,15 +98,73 @@ const AllApartments: React.FC = () => {
   const isNextDisabled = endIndex >= backendData.length;
   const isPrevDisabled = currentPage === 1;
 
+  const applyFilters = async (): Promise<void> => {
+    try {
+      const apartments = await axios.post<DataProps[]>('http://localhost:3000/api/search/apartment', {
+        searchTerm: filters.location,
+        priceRange: filters.price,
+        roomSpec: filters.roomType,
+      });
+      setBackendData(apartments.data);
+    } catch (error) {
+      console.error('Error applying filters:', error);
+    }
+  };
+
   return (
     <>
       <Navbar />
       <h3 className="all-apartment-header">All Apartments</h3>
       <div className="all-apartments">
-        <div className="dropdown-button" onClick={toggleFilterVisibility}>
-          <span className="dropdown-arrow">&#9650;</span>
+        <div className="filter-container">
+          <div className="filter-group">
+            <label htmlFor="price">Price:</label>
+            <input
+              type="text"
+              id="price"
+              name="price"
+              value={filters.price}
+              onChange={handleFilterChange}
+              placeholder="Enter price"
+              className="filter-input"
+            />
+          </div>
+          <div className="filter-group">
+            <label htmlFor="location">Location:</label>
+            <input
+              type="text"
+              id="location"
+              name="location"
+              value={filters.location}
+              onChange={handleFilterChange}
+              placeholder="Enter location"
+              className="filter-input"
+            />
+          </div>
+          <div className="filter-group">
+            <label htmlFor="roomType">Apartment Type:</label>
+            <select
+              id="roomType"
+              name="roomType"
+              value={filters.roomType}
+              onChange={handleFilterChange}
+              className="filter-select"
+            >
+              <option value="">Select Apartment Type</option>
+              <option value="One Bedroom Flat">One Bedroom Flat</option>
+              <option value="Two bedroom Flat">Two Bedroom Flat</option>
+              <option value="Three Bedroom Flat">Three Bedroom Flat</option>
+              <option value="One Room">One Room</option>
+              <option value="Two Rooms">Two Rooms</option>
+              <option value="Three Rooms">Three Rooms</option>
+            </select>
+          </div>
+
+          <button className="apply-button" onClick={applyFilters}>
+            Apply Filters
+          </button>
         </div>
-        {filterVisible && <Filter />}
+
         <div className="apartment-list">
           {displayedApartments.map((data, index) => (
             <ApartmentCard
@@ -128,19 +185,11 @@ const AllApartments: React.FC = () => {
           ))}
         </div>
         <div className="pagination">
-          <button
-            className="pagination-button"
-            onClick={handlePrevPage}
-            disabled={isPrevDisabled}
-          >
+          <button className="pagination-button" onClick={handlePrevPage} disabled={isPrevDisabled}>
             Previous
           </button>
           <span className="pagination-current-page">{currentPage}</span>
-          <button
-            className="pagination-button"
-            onClick={handleNextPage}
-            disabled={isNextDisabled}
-          >
+          <button className="pagination-button" onClick={handleNextPage} disabled={isNextDisabled}>
             Next
           </button>
         </div>

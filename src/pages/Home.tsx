@@ -12,6 +12,7 @@ import { apartmentType, room } from '../../api/src/models/roomSpec';
 import ReviewCard from '../components/ReviewsCard';
 import axios from 'axios'
 import Asection from '../components/Asection';
+import InfoScrollingComponent from '../components/InfoScrolling';
 
 interface DataProps {
   location: {
@@ -63,41 +64,19 @@ const Home = () => {
       })
   }, []);
 
-  const reviews = [
-    {
-      name: 'Wole',
-      rating: 5,
-      comment: 'I really Got my Apartment, This is an awesome site',
-      imageUrl: '../../public/images/user1.png'
-    },
-    {
-      name: 'Mrs Oluyemi',
-      rating: 5,
-      comment: 'try it for your self, this is awesome',
-      imageUrl: '../../public/images/user1.png'
-    },
-    {
-      name: 'Adeyemo',
-      rating: 4.5,
-      comment: 'This has to be the bast if the best!!',
-      imageUrl: '../../public/images/user1.png'
-    }
-  ]
-  const images = [
-    '../../public/images/house1.png',
-    '../../public/images/house2.png',
-    '../../public/images/house 3.png',
-    '../../public/images/house4.png',
-    '../../public/images/house5.png',
-    '../../public/images/house6.png',
-  ];
+
   const [backendData, setBackendData] = useState<DataProps[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/apartments')
-      .then((response) => response.json())
-      .then((data: DataProps[]) => {
+    axios
+      .get('http://localhost:3000/api/apartments', { withCredentials: true }) // Add 'withCredentials' option
+      .then((response) => response.data)
+      .then((data) => {
         setBackendData(data);
+      })
+      .catch((error) => {
+        // Handle the error if any
+        console.error('Error fetching data:', error);
       });
   }, []);
 
@@ -105,6 +84,8 @@ const Home = () => {
     <div className='home-page-container'>
       <div className="display">
         <Navbar />
+        <InfoScrollingComponent />
+        <ul className='line' />
         <Slideshow />
       </div>
       <div className="hot-apartments-heading">
@@ -113,7 +94,7 @@ const Home = () => {
       <b className='contact-heading'>APARTMENTS</b>
       <ul className="line"></ul>
       <div className="cards">
-        {backendData.map(
+        {backendData.slice(1, 8).map(
           (
             {
               location,
@@ -155,7 +136,7 @@ const Home = () => {
             padding: '10px',
             borderRadius: '5px',
             color: '#1d4e11',
-            backgroundColor: 'white',
+            backgroundColor: 'yellowgreen',
             margin: '5px auto',
             display: 'block',
             border: '0.5px',
