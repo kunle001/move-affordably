@@ -10,16 +10,15 @@ import { FaMapMarkerAlt } from 'react-icons/fa';
 
 interface DataProps {
   location: {
-    type: string;
-    coordinates: [number];
+    coordinates: number[];
     address: string;
     description?: string;
   };
-  checkpoints: [string];
+  checkpoints: string[];
   annualPackage: number;
   totalPackage: number;
-  distanceFromCheckPoints: [number];
-  images: [string];
+  distanceFromCheckPoints: number[];
+  images: string[];
   landlordSpecs: string;
   roomCategory?: room;
   apartmentType: apartmentType;
@@ -70,7 +69,11 @@ const ApartmentCard = (data: DataProps) => {
             <li className="list-group-item"><b style={{ color: 'yellowgreen' }}>Apartment Type:</b> {data.apartmentType}</li>
             <li className="list-group-item"> <b style={{ color: 'darkcyan' }}>Landlord Specication:</b> {data.landlordSpecs}</li>
             <li className="list-group-item">
-              <b style={{ color: 'gray' }}>{data.distanceFromCheckPoints}Km</b> From {data.checkpoints}
+              {
+                data.distanceFromCheckPoints.map((distance, index) => (
+                  <b style={{ color: 'gray', display: 'flex', flexDirection: 'column' }}>{distance}Km From {data.checkpoints[index]}</b>
+                ))
+              }
             </li>
           </ul>
         </div>

@@ -19,17 +19,17 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ name, rating, comment, imageUrl
   const formattedDate = formatDate(date);
 
   return (
-    <div className="review-card">
-      <div className="review-image-container">
-        <img src={imageUrl} alt="Review" className="review-image" />
-      </div>
+    <div className="lreview-card">
       <div className="review-content">
-        <div className="review-card-header">
-          <h3 className='username'>{name}</h3>
-          <div className="rating">
-            {Array.from({ length: rating }, (_, index) => (
-              <span key={index} className="star">&#9733;</span>
-            ))}
+        <div className="review-image-container">
+          <img src={imageUrl} alt="Review" className="review-image" />
+          <div className="review-card-header">
+            <div className='user'>{name}</div>
+            <div className="rating">
+              {Array.from({ length: rating }, (_, index) => (
+                <span key={index} className="star">&#9733;</span>
+              ))}
+            </div>
           </div>
         </div>
         <p className="review-content" style={{ fontStyle: 'italic' }}>"{comment}"</p>

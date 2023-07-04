@@ -15,7 +15,7 @@ interface CurrentUser {
 
 const Navbar: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
-  const user = Cookies.get('secretoken');
+
 
 
   useEffect(() => {
@@ -34,10 +34,11 @@ const Navbar: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log(currentUser);
+
   }, [currentUser]);
   const handleLogout = async () => {
     try {
+      await axios('http://localhost:3000/api/users/signout', { withCredentials: true })
       Cookies.remove('secretoken');
       Cookies.remove('currentUser');
     } catch (error) {
@@ -64,7 +65,7 @@ const Navbar: React.FC = () => {
             <li className="nav-item">
               <a className="nav-link" href="/contact-us" style={{ color: 'darkorange' }}>My Spec</a>
             </li>
-            {user ? (
+            {currentUser ? (
               <>
                 <li className="nav-item">
                   <a className="nav-link" href="/my-profile">My Profile</a>
@@ -80,7 +81,7 @@ const Navbar: React.FC = () => {
 
                   currentUser?.role === 'admin' && (
                     <li className='nav-item'>
-                      <a className='nav-link' href='/apartments/create'>Create Apartment</a>
+                      <a className='nav-link' href='/create'>Create Apartment</a>
                     </li>
                   )}
               </>

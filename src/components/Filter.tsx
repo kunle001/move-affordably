@@ -1,10 +1,35 @@
+// Filter.tsx
+
 import React, { useState } from 'react';
-import '../../public/css/Filter.css';
+import axios from 'axios';
+import SearchResult from '../pages/SearchResult';
+import { room, apartmentType } from '../../api/src/models/roomSpec';
+import { Route } from 'react-router-dom';
 
 interface Filters {
   price: string;
   location: string;
   roomType: string;
+}
+
+interface DataProps {
+  location: {
+    coordinates: number[];
+    address: string;
+    local_govt: string
+    description: string;
+  };
+  checkpoints: string[];
+  annualPackage: number;
+  totalPackage: number;
+  distanceFromCheckPoints: number[];
+  images: string[];
+  landlordSpecs: string;
+  roomCategory?: room;
+  apartmentType: apartmentType;
+  createdAt: Date;
+  description: string;
+  id: string
 }
 
 const Filter: React.FC = () => {
@@ -14,19 +39,30 @@ const Filter: React.FC = () => {
     roomType: ''
   });
 
-  const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleFilterChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ): void => {
     const { name, value } = event.target;
-    setFilters(prevFilters => ({ ...prevFilters, [name]: value }));
+    setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
   };
 
-  const handleApplyFilters = (): void => {
+  const handleApplyFilters = async () => {
     // Perform filtering logic or pass the filters to another component
-    console.log(filters);
+
+    const apartments = await axios.post('http://localhost:3000/api/search/apartment', {
+      searchTerm: filters.location,
+      priceRange: filters.price,
+      roomSpec: filters.roomType
+    });
+
+    const data: DataProps[] = apartments.data; // Assuming apartments.data is an array of DataProps
+
+    return <Route path='/search' element={<SearchResult data={data} />} />
   };
 
   return (
-    <div className="filter">
-      <div className="form-group">
+    <div className="filter-container" >
+      <div className="filter-group">
         <label htmlFor="price">Price:</label>
         <input
           type="text"
@@ -35,9 +71,10 @@ const Filter: React.FC = () => {
           value={filters.price}
           onChange={handleFilterChange}
           placeholder="Enter price"
+          className="filter-input"
         />
       </div>
-      <div className="form-group">
+      <div className="filter-group">
         <label htmlFor="location">Location:</label>
         <input
           type="text"
@@ -46,19 +83,21 @@ const Filter: React.FC = () => {
           value={filters.location}
           onChange={handleFilterChange}
           placeholder="Enter location"
+          className="filter-input"
         />
       </div>
-      <div className="form-group">
+      <div className="filter-group">
         <label htmlFor="roomType">Apartment Type:</label>
         <select
-          className='form-group'
           id="roomType"
           name="roomType"
           value={filters.roomType}
+          onChange={handleFilterChange}
+          className="filter-select"
         >
           <option value="">Select Apartment Type</option>
           <option value="One Bedroom Flat">One Bedroom Flat</option>
-          <option value="Two Bedroom Flat">Two Bedroom Flat</option>
+          <option value="Two bedroom Flat">Two Bedroom Flat</option>
           <option value="Three Bedroom Flat">Three Bedroom Flat</option>
           <option value="One Room">One Room</option>
           <option value="Two Rooms">Two Rooms</option>

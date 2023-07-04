@@ -21,16 +21,15 @@ const Payment: React.FC<PaymentProps> = ({ price }) => {
   const user = Cookies.get('currentUser');
   const currentUser: User = JSON.parse(user!);
   const cost = price * 1000
-  const key: string = process.env.flw_publickey!
   const config = {
-    public_key: key,
+    public_key: 'FLWPUBK_TEST-62e6625f170f5be35f415daac8ad1be0-X',
     tx_ref: Date.now().toString(),
     amount: cost,
     currency: 'NGN',
     payment_options: 'card,mobilemoney,ussd',
     customer: {
       email: currentUser.email,
-      phone_number: '070********',
+      phone_number: `${currentUser.phone}`,
       name: currentUser.name,
     },
     customizations: {
