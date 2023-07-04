@@ -14,23 +14,13 @@ import Map from './components/Map';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import ContactUs from './pages/Contactus';
 import UserProfilePage from './pages/UserProfile';
+import createApartment from './pages/createApartment';
+import ApartmentForm from './components/ApartmentForm';
+import BuyPoints from './pages/BuyPoints';
+import PageNotFound from './components/PageNotFound';
+
 
 function App() {
-  // const [alertVisible, setAlertVisible] = useState(false);
-
-  // const handleSelectItem = (item: string) => {
-  //   console.log(item);
-  // };
-  // return (
-  //   <div>
-  //     {alertVisible && <Alert onClose={() => { setAlertVisible(false) }}> SuccessFully Done!</Alert>}
-
-  //     <Button color='success' onClick={() => setAlertVisible(true)} >
-  //       My Button
-  //     </Button>
-  //   </div>
-  // );
-
   return <div>
     <Router>
       <div>
@@ -40,7 +30,10 @@ function App() {
           <Route path='/apartments' element={<AllApartments />} />
           <Route path="/apartment/:id" element={<SingleApartment />} />
           <Route path='/contact-us' element={<ContactUs />} />
-          <Route path='/user/:id' element={<UserProfilePage />} />
+          <Route path='/my-profile' element={<UserProfilePage />} />
+          <Route path='/create' element={<ApartmentForm />} />
+          <Route path='/buy-points' element={<BuyPoints />} />
+          <Route path='*' element={<PageNotFound />} />
         </Routes>
       </div>
     </Router>

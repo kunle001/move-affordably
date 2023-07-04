@@ -1,3 +1,11 @@
+.home-page-container {
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+  height: 80vh;
+}
+
+
 .about-content {
   text-align: center;
 }
@@ -25,7 +33,7 @@
 
 
 .hot-apartments-heading {
-  color: #343d36;
+  color: #ffffff;
   font-size: 24px;
   font-weight: bold;
   text-align: center;
@@ -58,11 +66,21 @@
   transition: opacity 0.3s;
 }
 
-/* .review-card {
+.reviews-container {
+  padding: 10px 40px 0px;
+  display: flex;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px; 
+  max-height: 500px;
+  background-color: rgb(255, 255, 255);
+  overflow:auto;
+}
+
+.review-card {
   border-radius: 20px;
   transition: transform 0.3s ease-in-out;
-} */
+} 
 
-/* .review-card:hover {
+.review-card:hover {
   transform: translateY(-5px);
-} */
+}
