@@ -1,0 +1,36 @@
+.transaction-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.transaction {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 5px 10px;
+}
+
+.credit {
+  color: green;
+}
+
+.debit {
+  color: red;
+}
+
+.transaction-date {
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.recipient {
+  margin-left: 10px;
+  font-size: 14px;
+  color: blue;
+}
+
+.searching{
+  font-size: medium;
+  font-weight: 500;
+  color: brown;
+}

@@ -1,42 +1,53 @@
-/* UserProfile.css */
-
+/* public/css/UserProfile.css */
 .user-profile {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  /* background-color: #f2f2f2; */
-  margin-top: 100px;
+  padding-top: 100px;
 }
 
 .avatar-container {
   position: relative;
   width: 200px;
   height: 200px;
-  border-radius: 50%;
   overflow: hidden;
+  border-radius: 50%;
   margin-bottom: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.avatar-container .cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
 }
 
 .avatar {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.blur-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(10px);
+  border-radius: 50%;
+  border: 5px solid white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .user-info {
   text-align: center;
-  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+}
+
+.user-email {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 5px;
+  padding-left: 1px;
 }
 
 .user-name {
@@ -45,73 +56,41 @@
   margin-bottom: 10px;
 }
 
-.user-email {
-  color: #888;
+.money-bag-icon {
+  margin-right: 5px;
 }
 
-.orders-section {
-  width: 100%;
-  margin-bottom: 30px;
-}
-
-.orders-section h3 {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.order-list {
-  margin-bottom: 20px;
-}
-
-.order-list h4 {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.order-item {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-.order-item h5 {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.order-item p {
-  margin: 5px 0;
-}
-
+.transactions-section,
 .notifications-section {
   width: 100%;
+  margin-top: 20px;
 }
 
+.transactions-section h3,
 .notifications-section h3 {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
+.transaction-item,
 .notification-item {
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 5px;
   margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.transaction-item p,
+.notification-item p {
+  margin: 5px 0;
+}
+
+.apartment-link {
+  display: block;
+  color: #007bff;
+  text-decoration: none;
+  margin-top: 5px;
 }
 
 
-.blur-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('../images/apartment-64933ee3a81ccb29640637e4-1687371602017.jpeg') no-repeat center center fixed;
-  background-size: cover;
-  filter: blur(10px);
-  z-index: -1;
-}

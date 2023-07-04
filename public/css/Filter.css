@@ -1,53 +1,56 @@
-.filter {
-  padding: 1rem;
-  width: 30%;
-  display: flex;
-  margin: 2px;
-}
+/* Filter.css */
 
-h2 {
-  margin-bottom: 1rem;
-}
-
-.form-group {
+.filter-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 0.5rem;
-  padding: 10px;
-  
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  max-width: 500px;
+  margin-left: 50px;
 }
 
-label {
+.filter-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.filter-group label {
+  margin-right: 10px;
   font-weight: bold;
 }
 
-input[type="text"] {
-  padding: 0.5rem;
+.filter-input {
+  padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: border-color 0.3s ease;
+  border-radius: 3px;
+  flex: 1;
 }
 
-input[type="text"]:focus {
-  outline: none;
-  border-color: #007bff;
+.filter-select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  flex: 1;
+  cursor: pointer;
 }
 
 .apply-button {
-  margin-top: 45px;
-  background-color: #3290d3;
-  color: #fff;
+  padding: 10px 20px;
+  background-color: #9ab6e3;
+  color: #000000;
   border: none;
-  border-radius: 4px;
+  border-radius: 3px;
   cursor: pointer;
-  height: 30px;
+  font-size: 16px;
+  transition: background-color 0.2s;
+  margin-top: 10px;
 }
 
 .apply-button:hover {
-  background-color: #a9b3bd;
+  background-color: #1a73e8;
 }
 
-.apply-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}

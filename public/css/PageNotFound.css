@@ -1,0 +1,28 @@
+.pgnf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+h1 {
+  font-size: 4rem;
+  color: #4d2d2d;
+  text-shadow: 1px 1px #000000;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0%);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+h1 {
+  animation: bounce 1s infinite;
+}

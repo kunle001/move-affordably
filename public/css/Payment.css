@@ -1,0 +1,79 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-image: url('https://monicaswanson.com/wp-content/uploads/shutterstock_282181733-768x512.jpg');
+  background-size: cover;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.content {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 40px;
+  border-radius: 8px;
+}
+
+.point-title {
+  font-size: 20px;
+  font-weight: bolder;
+  color: rgb(16, 68, 28);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin-bottom: 50px;
+}
+
+.rate {
+  font-size: 18px;
+  margin-bottom: 24px;
+  color: rgb(17, 4, 37);
+  font-weight: 500;
+  font-size: medium;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.input-container {
+  display: flex;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+}
+
+.input {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.payment-header {
+  font-size: medium;
+  font-weight: 900;
+  color: rgb(139, 80, 48);
+  padding-left: 10px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.flw-payment-button {
+  background-color: #ffffff;
+  color: #381111;
+  margin-top: 30px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 10px;
+  height: 50px;
+  width: 300px;
+  border: 1px solid #29d01e;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Add this line to center the content horizontally */
+}

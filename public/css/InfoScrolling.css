@@ -1,0 +1,42 @@
+.info-scrolling-container {
+  padding: 1px;
+  background-color: #e5f4d7;
+  margin-top: 80px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.info-scrolling-heading {
+  margin-top: 0;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.info-scrolling-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 40px;
+  animation: scrollAnimation 15s linear infinite;
+}
+
+.info-item {
+  flex: 0 0 auto;
+  margin-right: 20px;
+  padding: 5px 10px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+@keyframes scrollAnimation {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
