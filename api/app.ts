@@ -34,6 +34,7 @@ import { updatePaymentRouter } from './src/routes/payments/update';
 import { getAllPayments } from './src/routes/payments/getAll';
 import { myTransactionRouter } from './src/routes/payments/my-transcations';
 import { searchApartmentRouter } from './src/routes/apartment/search';
+import { getAllUsers } from './src/routes/users/getAll';
 
 
 
@@ -62,6 +63,7 @@ app.use(forgotPasswordRouter)
 app.use(resetPasswordRouter)
 app.use(getOneUserRouter)
 app.use(currentUserRouter)
+app.use(getAllUsers)
 
 
 // Apartment routes
