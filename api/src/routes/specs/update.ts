@@ -5,7 +5,10 @@ const router = express.Router();
 
 router.patch('/api/specs/:id', async (req, res) => {
   const spec = await Spec.findById(req.params.id);
-  spec!.set(req.body);
+  spec!.set({
+    status: 'found',
+    apartment: spec?.apartment.push(req.body.apartment)
+  });
 
   await spec!.save();
 

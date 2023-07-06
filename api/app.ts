@@ -35,6 +35,8 @@ import { getAllPayments } from './src/routes/payments/getAll';
 import { myTransactionRouter } from './src/routes/payments/my-transcations';
 import { searchApartmentRouter } from './src/routes/apartment/search';
 import { getAllUsers } from './src/routes/users/getAll';
+import { deleteUserRouter } from './src/routes/users/delete';
+import { deleteSpecsRouter } from './src/routes/specs/delete';
 
 
 
@@ -64,6 +66,7 @@ app.use(resetPasswordRouter)
 app.use(getOneUserRouter)
 app.use(currentUserRouter)
 app.use(getAllUsers)
+app.use(deleteUserRouter)
 
 
 // Apartment routes
@@ -87,6 +90,7 @@ app.use(createSpecRouter);
 app.use(getAllSpecsRouter)
 app.use(approveSpecRoute)
 app.use(SpecNotification);
+app.use(deleteSpecsRouter)
 
 // payments
 app.use(createPaymentRouter)

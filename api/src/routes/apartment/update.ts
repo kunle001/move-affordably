@@ -70,6 +70,7 @@ router.patch(
   resizeApartmentImages,
   async (req, res) => {
     const apartment = await Apartment.findById(req.params.id);
+    console.log(req.body)
     if (!apartment) throw new NotFoundError('No apartment with this id');
 
     apartment.set(req.body);

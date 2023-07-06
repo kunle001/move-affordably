@@ -57,6 +57,17 @@ paymentSchema.statics.build = (attrs: PaymentAttrs) => {
   return new Payment(attrs)
 };
 
+paymentSchema.pre(/^find/, function () {
+  // @ts-ignore
+  this.populate({
+    path: 'user',
+    select: 'name image email phone id points'
+  }).populate({
+    path: 'apartment',
+    select: 'location formpoint'
+  })
+})
+
 const Payment = mongoose.model<PaymentDocs, PaymentModel>('Payment', paymentSchema);
 
 export { Payment }

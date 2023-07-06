@@ -48,11 +48,14 @@ const specSchema = new mongoose.Schema({
 });
 
 
+
 specSchema.pre(/^find/, function () {
+  // @ts-ignore
+  this.sort({ createdAt: -1 })
   // @ts-ignore
   this.populate({
     path: 'user',
-    select: 'name image'
+    select: 'name image email phone id points'
   })
 })
 
