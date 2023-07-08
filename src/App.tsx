@@ -18,6 +18,7 @@ import createApartment from './pages/createApartment';
 import ApartmentForm from './components/ApartmentForm';
 import BuyPoints from './pages/BuyPoints';
 import PageNotFound from './components/PageNotFound';
+import AdminPanel from './pages/AdminPanel';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path='/my-profile' element={<UserProfilePage />} />
           <Route path='/create' element={<ApartmentForm />} />
           <Route path='/buy-points' element={<BuyPoints />} />
+          <Route path='/admin' element={<AdminPanel />} />
           <Route path='*' element={<PageNotFound />} />
         </Routes>
       </div>

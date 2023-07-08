@@ -24,6 +24,7 @@
 .cards {
   display: flex;
   flex-wrap: wrap;
+  min-height: 100vh;
   justify-content: center;
 }
 
@@ -79,8 +80,16 @@
 .review-card {
   border-radius: 20px;
   transition: transform 0.3s ease-in-out;
-} 
+  overflow-y: hidden; /* Hide the scrollbar for all devices */
+}
 
 .review-card:hover {
   transform: translateY(-5px);
+}
+
+/* Media Queries for Manual Scrolling on Mobile */
+@media (max-width: 767px) {
+  .review-card {
+    overflow-y: auto; /* Enable overflow scrolling for mobile devices */
+  }
 }
