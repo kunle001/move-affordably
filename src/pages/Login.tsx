@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { response } from 'express';
 import Cookies from 'js-cookie';
+import CustomAlert from './Alert';
 
 const LoginPage: React.FC = () => {
   const [activeForm, setActiveForm] = useState<'signin' | 'signup'>('signin');
@@ -51,7 +52,9 @@ const LoginPage: React.FC = () => {
       },
         { withCredentials: true });
 
-      alert('Signed Up Successfully');
+      <CustomAlert message='Signed Up Successfully' type='success' />
+
+      // alert('Signed Up Successfully');
 
 
       Cookies.set(
@@ -91,10 +94,10 @@ const LoginPage: React.FC = () => {
         password: password,
       },
         { withCredentials: true });
+      <CustomAlert message='Signed In Successfully' type='success' />
+      // alert('Logged in Successfully');
 
-      alert('Logged in Successfully');
-
-      // Cookies.set('secretoken', response.data.token, { expires: 7 });
+      Cookies.set('secretoken', response.data.token, { expires: 7 });
       Cookies.set(
         'currentUser',
         JSON.stringify({
