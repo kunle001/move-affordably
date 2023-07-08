@@ -1,0 +1,72 @@
+/* Add your custom styles to beautify the admin panel here */
+.charts-section {
+  padding: 20px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  height: 600px; /* Set a fixed height for the chart container */
+  overflow: auto; /* Enable scrolling */
+}
+
+.chart-card {
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+}
+
+.chart-title {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* Custom styles for recharts components */
+.recharts-cartesian-axis-tick {
+  font-size: 12px;
+  fill: #777;
+}
+
+.recharts-cartesian-axis-domain {
+  display: none;
+}
+
+.recharts-legend-item-text {
+  font-size: 12px;
+}
+
+.recharts-tooltip-label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.recharts-tooltip-item {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+/* Additional Bootstrap classes for layout */
+.contain {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.row {
+  display: flex;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.col-md-6 {
+  flex: 0 0 100%; /* Set each chart to occupy full width of the container */
+  max-width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.mt-4 {
+  margin-top: 1.5rem;
+}

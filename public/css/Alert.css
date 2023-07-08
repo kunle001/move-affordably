@@ -1,0 +1,41 @@
+/* CustomAlert.css */
+
+.custom-alert {
+  position: relative;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.custom-alert-success {
+  background-color: #6bbf59;
+  color: #fff;
+}
+
+.custom-alert-error {
+  background-color: #e53935;
+  color: #fff;
+}
+
+.custom-alert-warning {
+  background-color: #fdd835;
+  color: #000;
+}
+
+.custom-alert-message {
+  margin: 0;
+}
+
+.custom-alert-close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+}

@@ -1,0 +1,75 @@
+/* Requests.css */
+
+.requests-container {
+  margin: 20px;
+  
+}
+
+.request-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 10px;
+  
+}
+
+.request-item {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 5px;
+  border: solid 0.5px #235f0a;
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.request-item::-webkit-scrollbar {
+  width: 0px;
+  background-color: transparent;
+}
+
+.request-item h1 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.req-apartment{
+  background-color: #f5f5f5;
+  padding: 2px;
+  border-radius: 5px;
+  border: solid 0.9px #205308;
+}
+
+.request-item span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.request-item img {
+  width: 20%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.request-item p {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.request-item small {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.request-item b {
+  font-size: 18px;
+  font-weight: 100;
+}
+
+.request-item a {
+  font-size: 18px;
+  color: rgb(160, 135, 129);
+}
+

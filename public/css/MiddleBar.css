@@ -1,0 +1,24 @@
+.middle-bar {
+  padding: 20px;
+  flex-grow: 1;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.middle-bar h2 {
+  margin-bottom: 10px;
+}
+
+.middle-bar p {
+  margin-bottom: 20px;
+}
+
+.middle-bar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.middle-bar li {
+  margin-bottom: 5px;
+}

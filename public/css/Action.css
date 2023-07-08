@@ -1,0 +1,137 @@
+/* Add your CSS styles here */
+.actions-container {
+  font-family: Arial, sans-serif;
+  margin: 10px auto;
+  padding: 20px;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  scrollbar-width: 1px;
+  justify-content: space-between;
+  background-color: #ffffff;
+}
+
+.actions-container > div {
+  flex-basis: 50%; /* Each flex item takes 50% of the available width */
+  box-sizing: border-box; /* Include padding and border in the width calculation */
+  padding: 10px; /* Add some spacing between flex items */
+}
+
+
+.actions-container b {
+  margin-right: 5px;
+}
+
+.actions-container a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.actions-container h5 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.actions-container form {
+  margin-bottom: 20px;
+}
+
+.actions-container label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.actions-container input,
+.actions-container select {
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 100%;
+}
+
+.actions-container button {
+  background-color: #92a18e;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: solid 0.5px #2f5613;
+  border-radius: 20px;
+}
+
+.actions-container button:hover {
+  background-color: #51bb61;
+}
+
+/* Additional styling for specific elements */
+
+
+.actions-container .apartment-actions {
+  border: 1px solid #15692a;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 15px;
+  max-height: 500px;
+  overflow: scroll;
+}
+
+.actions-container .apartment-actions::-webkit-scrollbar {
+  width: 0.1em; /* Set the width of the scrollbar to make it invisible */
+}
+
+.actions-container .apartment-actions::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Set the background color of the scrollbar thumb to transparent */
+}
+
+
+.update-apartment{
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.actions-container .apartment-actions form {
+  display: flex;
+  flex-wrap: wrap;
+  
+}
+
+.actions-container .apartment-actions input[type="text"],
+.actions-container .apartment-actions input[type="number"] {
+  flex-basis: 100%;
+}
+
+.actions-container .apartment-actions button {
+  flex-basis: auto;
+}
+
+.actions-container .update-apartment form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.actions-container .update-apartment label {
+  flex-basis: 100%;
+}
+
+.actions-container .update-apartment input {
+  flex-basis: 50%;
+}
+
+.actions-container .update-apartment select {
+  flex-basis: 100%;
+}
+
+.actions-container .delete-apartment input,
+.actions-container .delete-user input {
+  width: 200px;
+}
+
+.actions-container .delete-apartment button,
+.actions-container .delete-user button {
+  background-color: #dc3545;
+}
+
+.actions-container .delete-apartment button:hover,
+.actions-container .delete-user button:hover {
+  background-color: #c82333;
+}
