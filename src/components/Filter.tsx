@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-import SearchResult from '../pages/SearchResult';
+// import SearchResult from '../pages/SearchResult';
 import { room, apartmentType } from '../../api/src/models/roomSpec';
 import { Route } from 'react-router-dom';
 
@@ -57,7 +57,7 @@ const Filter: React.FC = () => {
 
     const data: DataProps[] = apartments.data; // Assuming apartments.data is an array of DataProps
 
-    return <Route path='/search' element={<SearchResult data={data} />} />
+    // return <Route path='/search' element={<SearchResult data={data} />} />
   };
 
   return (

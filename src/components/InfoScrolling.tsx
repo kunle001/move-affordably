@@ -4,11 +4,13 @@ import '../../public/css/InfoScrolling.css';
 const InfoScrollingComponent = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [infoData, setInfoData] = useState([
-    'Information 1',
-    'Information 2',
-    'Information 3',
-    'Information 4',
-    'Information 5',
+    'Get free cleaning for your first apartment with us 🧚‍♂️ ',
+    'Get 50% discount on consultancy fee🤝',
+    'Sign up with us and become an agent',
+    'Anticipate our currency💸',
+    'Vacancy for customer care Agent, call us',
+    'We are trusted and reliable 🤗',
+    'We are a verified company ✅ '
   ]);
 
   useEffect(() => {

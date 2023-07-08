@@ -23,7 +23,7 @@ const Notification: React.FC<DataProps> = (data: DataProps) => {
 
   return (
     <div className='notification-item'>
-      <div className='transaction'>
+      <div style={{ color: 'darkcyan' }}>
         {data.status === 'found' ? (
           <>
             <p>{data.specification}</p>

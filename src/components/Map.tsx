@@ -29,11 +29,11 @@ const Map: React.FC<MapProps> = ({ latitude, longitude }) => {
     // Add marker
     new mapboxgl.Marker({
       element: markerElement,
-      anchor: 'bottom',
-      offset: [0, -600] // Adjust the vertical position of the marker
+      offset: [40, -430]
     })
       .setLngLat([longitude, latitude])
       .addTo(map);
+
 
     // Cleanup
     return () => {

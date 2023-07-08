@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaFacebook, FaTwitter, FaInstagram, FaShoppingBag } from 'react-icons/fa';
 import { GiMoneyStack } from 'react-icons/gi';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
@@ -38,9 +39,10 @@ const Navbar: React.FC = () => {
   }, [currentUser]);
   const handleLogout = async () => {
     try {
-      await axios('http://localhost:3000/api/users/signout', { withCredentials: true })
+      await axios.get('http://127.0.0.1:3000/api/users/signout')
       Cookies.remove('secretoken');
       Cookies.remove('currentUser');
+
     } catch (error) {
       // @ts-ignore
       console.log(error.response.data.errors[0].message);
@@ -48,10 +50,12 @@ const Navbar: React.FC = () => {
   };
 
   return (
+
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
-          <img src="../../public/images/logo.png" alt="Logo" className="logo" style={{ height: '60px', width: '60px', borderRadius: '50%' }} />
+          <img src="../../public/images/logo.png" alt="Logo" className="logo" style={{ height: '40px', width: '40px', borderRadius: '50%' }} />
           <b style={{ color: 'rgb(41, 112, 90)' }}>FonetoHome</b>
         </a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,7 +85,7 @@ const Navbar: React.FC = () => {
 
                   currentUser?.role === 'admin' && (
                     <li className='nav-item'>
-                      <a className='nav-link' href='/create'>Create Apartment</a>
+                      <a className='nav-link' href='/admin'>Admin Panel</a>
                     </li>
                   )}
               </>
