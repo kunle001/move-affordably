@@ -4,6 +4,7 @@ import '../../public/css/Contaat.css';
 import { FaPhone, FaEnvelope, FaInstagram, FaTwitter, FaFacebook } from 'react-icons/fa';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
+import Cookies from 'js-cookie';
 
 interface FormData {
   name: string;
@@ -25,12 +26,18 @@ const ContactUs: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const currentUser = Cookies.get('currentUser');
+      if (!currentUser) {
+        alert('You need to login to Make your request');
+        window.location.href = '/login';
+        return null; // Add a return statement here to prevent further rendering
+      }
       // Make a POST request to the endpoint
       const response = await axios.post('http://localhost:3000/api/specs',
         {
           specification: formData.message
         }, { withCredentials: true });
-      alert('Congrats: we got your response, and we will gwt back you!')
+      alert('Congrats: we got your response, and we will get back you!')
       window.history.back()
       // Optionally, you can show a success message or redirect the user to another page after successful submission.
     } catch (error) {
