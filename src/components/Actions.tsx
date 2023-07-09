@@ -85,12 +85,14 @@ const Actions: React.FC = () => {
     event.preventDefault();
 
     // Send request using Axios
-    axios.post('/api/approveRequest', approveRequestFormData)
+    axios.post(`http://localhost:3000/api/specs/approve/${approveRequestFormData.requestId}`, {
+      apartment: approveRequestFormData.apartmentId
+    })
       .then((response) => {
         // Handle response if needed
       })
       .catch((error) => {
-        // Handle error if needed
+        alert(error.response.data.errors[0].message);
       });
   };
 
@@ -104,7 +106,7 @@ const Actions: React.FC = () => {
         // Handle response if needed
       })
       .catch((error) => {
-        // Handle error if needed
+        alert(error.response.data.errors[0].message);
       });
   };
 
@@ -147,12 +149,9 @@ const Actions: React.FC = () => {
     event.preventDefault();
 
     // Send request using Axios
-    axios.delete(`/api/deleteApartment/${deleteApartmentFormData.apartmentId}`)
-      .then((response) => {
-        // Handle response if needed
-      })
+    axios.delete(`http://localhost:3000/api/apartment/${deleteApartmentFormData.apartmentId}`)
       .catch((error) => {
-        // Handle error if needed
+        alert(error.response.data.errors[0].message);
       });
   };
 
@@ -160,12 +159,10 @@ const Actions: React.FC = () => {
     event.preventDefault();
 
     // Send request using Axios
-    axios.delete(`/api/deleteUser/${deleteUserFormData.userId}`)
-      .then((response) => {
-        // Handle response if needed
-      })
-      .catch((error) => {
-        // Handle error if needed
+    axios.delete(`http://localhost:3000/api/users/${deleteUserFormData.userId}`, {
+      withCredentials:true
+    }).catch((error) => {
+      alert(error.response.data.errors[0].message);
       });
   };
 

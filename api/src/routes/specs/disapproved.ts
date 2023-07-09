@@ -3,7 +3,7 @@ import { Spec } from '../../models/specs';
 
 const router = express.Router();
 
-router.patch('/api/specs/:id', async (req, res) => {
+router.patch('/api/specs/disapprove/:id', async (req, res) => {
   const spec = await Spec.findById(req.params.id);
   spec!.set({ status: 'not found' });
 
@@ -12,4 +12,4 @@ router.patch('/api/specs/:id', async (req, res) => {
   res.send(spec)
 });
 
-export { router as approveSpecRoute }
+export { router as disApproveSpecRoute }

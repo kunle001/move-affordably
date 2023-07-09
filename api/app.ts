@@ -37,6 +37,7 @@ import { searchApartmentRouter } from './src/routes/apartment/search';
 import { getAllUsers } from './src/routes/users/getAll';
 import { deleteUserRouter } from './src/routes/users/delete';
 import { deleteSpecsRouter } from './src/routes/specs/delete';
+import { disApproveSpecRoute } from './src/routes/specs/disapproved';
 
 
 
@@ -91,6 +92,7 @@ app.use(getAllSpecsRouter)
 app.use(approveSpecRoute)
 app.use(SpecNotification);
 app.use(deleteSpecsRouter)
+app.use(disApproveSpecRoute);
 
 // payments
 app.use(createPaymentRouter)

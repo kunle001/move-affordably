@@ -3,7 +3,7 @@ import { Spec } from '../../models/specs';
 
 const router = express.Router();
 
-router.patch('/api/specs/:id', async (req, res) => {
+router.patch('/api/specs/approve/:id', async (req, res) => {
   const spec = await Spec.findById(req.params.id);
   spec!.set({
     status: 'found',

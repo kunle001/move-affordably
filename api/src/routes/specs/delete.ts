@@ -4,7 +4,7 @@ import { Spec } from '../../models/specs';
 
 const router = express.Router()
 
-router.delete('/api/specs/:id', currentUser, requireAuth, async (req, res) => {
+router.delete('/api/specs/delete/:id', currentUser, requireAuth, async (req, res) => {
   if (req.currentUser?.role !== 'admin') throw new NotAUthorizedError();
 
   await Spec.findByIdAndDelete(req.params.id);
