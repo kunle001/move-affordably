@@ -1,15 +1,20 @@
 import { BadRequestError, NotFoundError, currentUser, requireAuth } from '@kunleticket/common';
-import express, { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { Apartment } from '../../models/apartment';
 import multer, { FileFilterCallback } from 'multer';
 import sharp from 'sharp';
-import mongoose from 'mongoose';
-import path from 'path';
-import fs from 'fs'
+import AWS from 'aws-sdk';
+import { Router } from 'express';
 
-const router = express.Router();
+const router = Router();
 
 const multerStorage = multer.memoryStorage();
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_KEY!,
+  secretAccessKey: process.env.AWS_SECRET!,
+  region: 'us-east-1'
+});
+
 
 const multerFilter = (req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
   if (file.mimetype.startsWith('image')) {
@@ -27,37 +32,64 @@ const upload = multer({
 const uploadPicture = upload.fields([{ name: 'images', maxCount: 10 }]);
 
 const resizeApartmentImages = async (req: Request, res: Response, next: NextFunction) => {
-  // @ts-ignore
   if (!req.files) return next();
   req.body.images = [];
 
-  const imagePrefix = `apartment-${req.params.id}`;
-  const imageDir = path.join(__dirname, '..', '..', '..', '..', 'public', 'images');
-  const files = fs.readdirSync(imageDir);
-  const regex = new RegExp(`^${imagePrefix}`);
+  const apartmentId = req.params.id;
 
-  files.forEach((file) => {
-    if (regex.test(file)) {
-      const imagePath = path.join(imageDir, file);
-      fs.unlinkSync(imagePath)
+  try {
+    // Deleting previous images in the bucket
+    const listParams = {
+      Bucket: 'fonetohome',
+      Prefix: `apartment-${apartmentId}`
+    };
+    const existingObjects = await s3.listObjectsV2(listParams).promise();
+    if (existingObjects.Contents!.length > 0) {
+      const deleteParams = {
+        Bucket: 'fonetohome',
+        Delete: {
+          Objects: existingObjects.Contents!.map((obj) => ({
+            Key: obj.Key!
+          }))
+        }
+      };
+
+      await s3.deleteObjects(deleteParams).promise();
+
     }
-  })
-  await Promise.all(
-    // @ts-ignore
-    req.files['images'].map(async (file: Express.Multer.File, i: number) => {
-      const apartmentId = req.params.id;
-      const timestamp = Date.now();
-      const filename = `apartment-${apartmentId}-${timestamp}.jpeg`;
 
-      await sharp(file.buffer)
-        .resize(2000, 1333)
-        .toFormat('jpeg')
-        .jpeg({ quality: 90 })
-        .toFile(`../public/images/${filename}`);
+    await Promise.all(
+      // @ts-ignore
+      req.files['images'].map(async (file: Express.Multer.File, i: number) => {
+        const timestamp = Date.now();
+        const filename = `apartment-${apartmentId}-${timestamp}.jpeg`;
 
-      req.body.images.push(filename);
-    })
-  );
+        try {
+          const resizedImageBuffer = await sharp(file.buffer)
+            .resize(2000, 1333)
+            .toFormat('jpeg')
+            .jpeg({ quality: 90 })
+            .toBuffer();
+
+          const params = {
+            Bucket: 'fonetohome',
+            Key: filename,
+            Body: resizedImageBuffer,
+            ContentType: 'image/jpeg',
+            ACL: 'public-read'
+          };
+
+          const uploadedObject = await s3.upload(params).promise();
+
+          req.body.images.push(uploadedObject.Location);
+        } catch (error) {
+          console.error('Error uploading image:', error);
+        }
+      })
+    );
+  } catch (error) {
+    console.error('Error resizing images:', error);
+  }
 
   next();
 };
@@ -68,9 +100,9 @@ router.patch(
   requireAuth,
   uploadPicture,
   resizeApartmentImages,
-  async (req, res) => {
+  async (req: Request, res: Response) => {
     const apartment = await Apartment.findById(req.params.id);
-    console.log(req.body)
+
     if (!apartment) throw new NotFoundError('No apartment with this id');
 
     apartment.set(req.body);

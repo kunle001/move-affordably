@@ -10,9 +10,16 @@ import multer, { FileFilterCallback } from 'multer';
 import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
+import AWS from 'aws-sdk'
 
 const router = express.Router();
 const multerStorage = multer.memoryStorage();
+
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_KEY!,
+  secretAccessKey: process.env.AWS_SECRET!,
+  region: 'us-east-1'
+});
 
 const multerFilter = (
   req: Request,
@@ -40,9 +47,10 @@ const resizeUserImage = async (
 ) => {
   if (!req.file) return next();
 
-  const previousImage = req.currentUser!.image;
-
   // Delete previous profile pictures with matching prefix
+
+  /*
+  const previousImage = req.currentUser!.image;
   const imagePrefix = `user-${req.currentUser!.id}`;
   const imageDir = path.join(__dirname, '..', '..', '..', '..', 'public', 'images', 'users');
   const files = fs.readdirSync(imageDir);
@@ -55,15 +63,31 @@ const resizeUserImage = async (
     }
   });
 
-  req.file.filename = `user-${req.currentUser!.id}-${Date.now()}.jpeg`;
+  */
 
-  await sharp(req.file.buffer)
+
+
+
+  const filename = req.file.filename = `user-${req.currentUser!.id}-${Date.now()}.jpeg`;
+
+  const resizedImageBuffer = await sharp(req.file.buffer)
     .resize(500, 500)
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
-    .toFile(path.join(imageDir, req.file.filename));
+    .toBuffer();
 
-  req.body.image = req.file.filename;
+  const params = {
+    Bucket: 'fonetohome',
+    Key: filename,
+    Body: resizedImageBuffer,
+    ContentType: 'image/jpeg',
+    ACL: 'public-read'
+  };
+
+
+  const uploadedObject = await s3.upload(params).promise()
+
+  req.body.image = uploadedObject.Location;
 
   next();
 };
