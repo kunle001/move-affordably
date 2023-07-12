@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import { body } from "express-validator";
 import { User } from "../../models/user"
 import { BadRequestError } from "@kunleticket/common";
+import { Emailer } from "../../utils/emailer";
 
 
 const router = express.Router()
@@ -18,6 +19,8 @@ router.post('/api/users/forgotPassword', [
 
   const resetToken = user.createPasswordResetToken()
   await user.save({ validateBeforeSave: false });
+
+  await new Emailer(user.email, user.name!).sendPasswordReset(`${req.protocol}://${req.get('host')}/api/users/resetPassword/${resetToken}`)
 
 
 

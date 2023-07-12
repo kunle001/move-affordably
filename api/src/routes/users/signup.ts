@@ -3,6 +3,8 @@ import { body } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import { User } from "../../models/user"
 import { BadRequestError, validateRequest } from '@kunleticket/common'
+import { Emailer } from '../../utils/emailer';
+
 
 const router = express.Router();
 
@@ -45,6 +47,8 @@ router.post('/api/users/signup', [
   req.session = {
     jwt: userJwt,
   };
+
+  await new Emailer(user.email, user.name!).sendWelcome()
 
   res.status(201).send(user)
 });
